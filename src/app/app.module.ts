@@ -19,6 +19,7 @@ import { PagesModule } from './views/pages/pages.module';
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { LocationStrategy } from '@angular/common';
 import { CustomLocationStrategy } from './custom-location-strategy';
+import { MeghaComponent } from './megha/megha.component';
 
 
 // AoT requires an exported function for factories
@@ -66,7 +67,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RouterModule.forRoot(rootRouterConfig, { useHash: false }),
     PagesModule
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, MeghaComponent],
   providers: [NgxImageCompressService,
     { provide: ErrorHandler, useClass: ErrorHandlerService },
     { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig },
