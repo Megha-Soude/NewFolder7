@@ -1,0 +1,86 @@
+<mat-card class="p-0">
+  <mat-card-title class="">
+    <div class="card-title-text">Party Master</div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="itemForm">
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+
+              <mat-label>Select Party Type</mat-label>
+              <mat-select [disabled]="RoleTypeDisabled" class="readonly-block readonly-wrapper"
+                [disableOptionCentering]="true"
+                (selectionChange)="OnselectedParty($event.value)"
+                [formControl]="itemForm.controls['party_type']">
+                <mat-option *ngFor="let type of PartyTypeArray" [value]="type.id"> {{type.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-xs="50">
+          <div class="pb-1"  >
+            <mat-form-field class="full-width">
+              <input  maxlength="50" (keypress)="omit_special_char($event)" #input1 class="text-capitalize" matInput name="Position"   [formControl]="itemForm.controls['party_sub_type_name']"
+                placeholder="Sub Party Type Name" >
+            </mat-form-field>
+          </div>
+
+
+        </div>
+        <div fxFlex="100" fxFlex.gt-xs="30">
+          <div class="pb-1"  >
+            <button *ngIf="btnSave" mat-raised-button color="primary" (click)="save()" >Add</button>
+            <button *ngIf="btnupdate" mat-raised-button color="primary" (click)="update()" >Update</button>
+            &nbsp;&nbsp;<button mat-raised-button color="warn" (click)="Reset()" >Reset</button>
+
+
+          
+          </div>
+
+
+        </div>
+      </div>
+
+      <div  fxLayout="row wrap">
+        <ngx-datatable style="width: 100%"
+        class="material ml-0 mr-0"
+        [rows]="rows"
+        [columnMode]="'force'"
+        [headerHeight]="40"
+        [footerHeight]="40"
+        [scrollbarH]="true"
+        [limit]="10000"
+        [rowHeight]="35">
+      
+        <!-- <ngx-datatable-column  [sortable]="false" name="Party Type" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.name }}
+          </ng-template>
+        </ngx-datatable-column> -->
+        <ngx-datatable-column  [sortable]="false" name="Party Sub Type" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.name }}
+          </ng-template>
+        </ngx-datatable-column>
+
+     
+
+        <ngx-datatable-column  [sortable]="false" name="Actions" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <button mat-icon-button mat-sm-button color="primary" class="mr-1" (click)="Edit(row)">Edit</button>
+           
+          </ng-template>
+        </ngx-datatable-column>
+       
+      </ngx-datatable>
+          
+        </div>
+      
+
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,50 @@
+
+
+   .textFont{
+
+    font-weight: bolder;
+    color: #0e1068 !important;
+  }
+  
+  .ngx-datatable.material {
+    .datatable-header {
+      .datatable-header-cell {
+        // your styles here
+       //font-size: 10in;
+       // font-weight: 700;
+        background-color:#999999 !important;
+        color:white;
+        font-size: inherit;
+        font-weight: bold;
+        text-align: center;
+        // text-align-last: center
+       // text-decoration-color: whitesmoke;
+
+      }
+    }
+  }
+  .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell {
+ 
+    text-align: center !important;
+  }
+
+ 
+  
+
+  .ngx-datatable.material {
+    overflow-wrap: break-word;
+    }
+
+
+  .mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus, .mat-tab-group.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus, .mat-tab-nav-bar.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus, .mat-tab-nav-bar.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus{
+    background: #0e1068 !important; 
+  }
+  /* ink bar style */
+ 
+  .mat-ink-bar {
+    background-color: #0e1068 !important ;
+}
+
+
+
+

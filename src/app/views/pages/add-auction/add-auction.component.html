@@ -1,0 +1,395 @@
+<mat-card class="p-0">
+  <mat-card-title class="">
+    <div fxLayout="row">
+      
+      <div class="card-title-text">
+        <mat-icon [routerLink]="'/pages/AuctionList'" class="cursor">arrow_back</mat-icon> &nbsp;&nbsp;&nbsp;Add Auction
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
+    <p style="font-size: x-small;  color: red;">Fields marked with * are mandatory</p>
+    <mat-horizontal-stepper [linear]="true" #stepper>
+
+      <mat-step>
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel><button class="bg" mat-flat-button color="accent">Fill Auction</button>
+          </ng-template>
+
+
+
+          <div fxLayout="row">
+            <div fxFlex="35"> <span><label class="control-label"> <label class="control-label" style="color: red;">*</label>Auction Title
+                :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input [readonly]="btnUpdate" style="margin-right: 20px !important;border: ridge !important;"
+                class="pickers" [formControl]="firstFormGroup.controls['auction_title']" AlphaNumbericDirective
+                maxlength="25" required>
+              </span>
+            </div>
+            <div fxFlex="35"> <span> <label class="control-label"> <label class="control-label" style="color: red;">*</label>Start
+                  Date/Time:</label>&nbsp;&nbsp;
+                <input [disabled]="btnUpdate && btnUpdateRemove" required readonly class="pickers" [min]="max"
+                  [formControl]="firstFormGroup.controls['start_at']" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1">
+                <span class="trigger">
+                  <mat-icon style=" font-size: 15px !important; " class="spancls">date_range</mat-icon>
+                </span>
+                <owl-date-time #dt1 [disabled]="btnUpdate && btnUpdateRemove"></owl-date-time>
+              </span></div>
+            <div fxFlex="30"> <span> <label class="control-label"> <label class="control-label"
+                    style="color: red;">*</label>End Date/Time:</label>&nbsp;&nbsp;
+                <input required readonly class="pickers" [min]="max"
+                  [formControl]="firstFormGroup.controls['actual_end_at']" [owlDateTimeTrigger]="dt2"
+                  [owlDateTime]="dt2">
+                <span class="trigger">
+                  <mat-icon style=" font-size: 15px !important; " class="spancls">date_range</mat-icon>
+                </span>
+                <owl-date-time #dt2></owl-date-time>
+              </span></div>
+          </div>
+          <br />
+          <br />
+          <div fxLayout="row">
+            <div fxFlex="35"> 
+              <label class="control-label"> <label class="control-label" style="color: red;">*</label>Interval
+                :</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input [readonly]="btnUpdate" style="margin-right: 20px !important; border: ridge !important;" autocomplete="off"
+                class="pickers" (keypress)="numberOnly($event)" [formControl]="firstFormGroup.controls['interval']" AlphaNumbericDirective
+                maxlength="25" required>
+            </div>
+            <div fxFlex="35">
+              <div>
+                <label class="control-label"> <label class="control-label" style="color: red;">*</label>Auction Image
+                :</label>
+              <!-- <p style="color: rgb(169, 169, 169);"> <label class="control-label" style="color: red;">*</label>Auction
+                 </p> -->
+                <input [disabled]="imageSrc ? true : false " #RefInput type="file" (change)="onSelectFile($event)"
+                  style="display:none" />
+                  &nbsp;&nbsp;&nbsp;
+                <a mat-raised-button color="primary" class="files bg" (click)="RefInput.click()">
+                  <mat-icon>insert_photo</mat-icon>
+                </a>
+              </div>&nbsp;&nbsp;
+              <div>
+                <a target="_blank" (click)="ShowImagePopUp(imageSrc)" *ngIf="imageSrc"
+                style="text-decoration-line: underline; color: blue;" routerLinkActive="active">
+                <img id="blah" *ngIf="imageSrc" src="{{imageSrc}}" width="80px" height="80px" /> </a>
+              </div>
+            </div>
+            <div fxFlex="30">
+              <span>
+                <label class="control-label">
+                  <label class="control-label" style="color: red;">*</label>
+                  Type of auction:
+                </label>&nbsp;&nbsp;
+                <select [(value)]="selectedAuctionType" [formControl]="firstFormGroup.controls['type_of_auction']"
+                class="pickers" required>
+                  <option  value="CUSTOMER">CUSTOMER</option>
+                  <option  value="BUYER">BIDDER</option>
+                </select>
+              </span>
+            </div>
+          </div>
+          <br />
+          <br />
+          <small style="color: red; font-size: inherit;">
+            <b>**Instruction:</b>
+            Image size should be 500*400 and file size should be less than 5 MB and only jpeg,png and jpg file are
+            allowed </small>
+            <br />
+            <br />
+          <div>
+            <button mat-raised-button color="primary" (click)="compareTwoDates()">Next</button>
+            &nbsp;
+            <button mat-raised-button color="primary" *ngIf="btnUpdate && CheckPermission('update')"
+              (click)="update()">Update</button>
+            <!-- <button (click)="goForward(stepper)" class="bg" mat-raised-button color="primary" type="button">
+              Next
+            </button> -->
+          </div>
+
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel><button class="bg" mat-flat-button color="warn">Inventory Details</button>
+          </ng-template>
+          <mat-card class="p-0">
+
+           
+            <mat-card-content class="p-0">
+
+              <div>
+                <div 
+               style=" margin-left: 10px;">
+  
+                
+              <mat-form-field class="filterwidth" fxFlex="20" fxFlex.gt-xs="20" class="pr-1">
+                <mat-label>State</mat-label>
+                <mat-select [(value)]="selected1" disableRipple>
+                  <mat-option *ngFor="let Sate of States" value={{Sate.state_name}}>{{Sate.state_name}}</mat-option>
+
+                </mat-select>
+
+              </mat-form-field>
+
+              <mat-form-field class="filterwidth" fxFlex="70" fxFlex.gt-xs="70" class="pr-1">
+                <input  type="text" placeholder="Yard" aria-label="Number" matInput 
+                  [formControl]="secondFormGroup.controls['YardDetails']" [matAutocomplete]="auto">
+                <mat-autocomplete  (optionSelected)="Onchangeyard($event)" #auto="matAutocomplete">
+                  <mat-option *ngFor="let option of tempdata " [value]="option.Dsiplay"  >
+                    {{option.Dsiplay}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+              <div class="filterwidth" fxFlex="20" fxFlex.gt-xs="20" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input  type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" maxlength="25" 
+                      matInput placeholder="Contract Number" [formControl]="secondFormGroup.controls['contract_no']">
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+
+              <button mat-raised-button style="    margin: 20px 10px;
+              width: 20%;" (click)="StateList()" color="primary">Search</button>
+              <button mat-raised-button style="margin: 20px 10px;
+              width: 20%;" (click)="reset()" color="warn">Reset</button>
+            </div>
+            <div>
+
+              <span style="margin-left: 10px;"> <strong>Selected State:</strong> {{selected1}} </span>
+
+             <span style="margin-left: 10px;"> <strong>Yard Name:</strong> {{selectedvalue}} </span>
+
+             <span style="margin-left: 10px;"> <strong>Contract Number:</strong> {{contractno}} </span>
+            </div>
+            <div>
+            
+              <div formArrayName="NewInventoryData">
+                <ngx-datatable #mydatatable class="material" [headerHeight]="50" [columnMode]="'force'"
+                  [footerHeight]="50" [rowHeight]="'auto'" [externalPaging]="true" [scrollbarH]="true"
+                  (page)="setPage($event)" [limit]="page.size" [count]="page.totalElements" [rows]="InventoryData">
+
+                  <ngx-datatable-column name="Image">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                      <img src="{{ row?.cover_image }}" alt="" width="50px" height="30px">
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                  <ngx-datatable-column name="Inventory Title">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row"
+                      style="margin-top: 10px;">
+                      {{ row?.inventory_title }}
+                    </ng-template>
+                  </ngx-datatable-column>
+
+
+                  <ngx-datatable-column name="Category">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row"
+                      style="margin-top: 10px;">
+                      {{ row?.inv_type }}
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                  <ngx-datatable-column name="Registration No">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row"
+                      style="margin-top: 10px;">
+                      {{ row?.category_type }}
+                    </ng-template>
+                  </ngx-datatable-column>
+
+
+                  <ngx-datatable-column name="Contract No">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row"
+                      style="margin-top: 10px;">
+                      {{ row?.subcategory_type }}
+                    </ng-template>
+                  </ngx-datatable-column>
+
+
+
+
+
+                  <!-- <ngx-datatable-column name="Start Date">
+                       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" style="margin-top: 10px;">
+                       <div  [formGroupName]="rowIndex">
+                           <input [formControlName]="'start_at'" [min]="minDate"  [readonly]="editing[rowIndex]"  style="width: 130px;"  autofocus type="date" />
+                       
+                          
+                          </div>
+                       </ng-template>
+                    </ngx-datatable-column> -->
+
+                  <!-- <ngx-datatable-column name="Start Time">
+                      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" style="margin-top: 10px;">
+                      <div  [formGroupName]="rowIndex">
+                          <input [formControlName]="'start_time'"  [readonly]="editing[rowIndex]" autofocus type="time" />
+                         </div>
+                      </ng-template>
+                   </ngx-datatable-column> -->
+
+                  <ngx-datatable-column name="Min Bid Amount">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row"
+                      style="margin-top: 10px;">
+                      <div [formGroupName]="rowIndex">
+                        <input oninput="this.value=this.value.replace(/[^0-9]/g,'');" maxlength="8"
+                          (blur)="updateValue1($event,row, rowIndex)" type="text" [value]="row.min_bid_amount"
+                          [formControlName]="'min_bid_amount'" placeholder="Enter Min Bid" min="0" style="width: 98px;"
+                          [readonly]="row.disabled" autofocus />
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <!-- <ngx-datatable-column name="Max Bid Amount">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row"
+                      style="margin-top: 10px;">
+                      <div [formGroupName]="rowIndex">
+                        <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" maxlength="8"
+                          [formControlName]="'max_bid_amount'" placeholder="Enter Max Bid" min="0" style="width: 98px;"
+                          [readonly]="editing[rowIndex]" autofocus />
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column> -->
+
+                  <ngx-datatable-column name="Action">
+
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row"
+                      style="margin-top: 10px;">
+
+                      <div [formGroupName]="rowIndex">
+
+                        <button mat-icon-button mat-sm-button color="primary" class="mr-1" [disabled]="row.disabled"
+                          (click)="AddInventory(row,rowIndex)">Add</button>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                </ngx-datatable>
+              </div>
+
+  
+            </div>
+          </div>
+            </mat-card-content>
+          </mat-card>
+
+
+          <div fxLayout="row">
+            <button mat-raised-button color="accents" matStepperPrevious>Back</button>
+            <span fxFlex="8px"></span>
+            <button mat-raised-button color="primary" matStepperNext (click)="BindCartData()">Next</button>&nbsp;
+            <button mat-raised-button color="primary" *ngIf="btnUpdate && CheckPermission('update')"
+              (click)="update()">Update</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel> <button class="bg" mat-flat-button color="primary" (click)="BindCartData()">Submit
+            Auction</button></ng-template>
+        <div>
+          <mat-card class="p-0" [@animate]="{value:'*',params:{y:'50px',delay:'300ms'}}">
+            <mat-card-content class="p-0">
+
+
+              <ngx-datatable class="material ml-0 mr-0" [rows]="Cartitems" [columnMode]="'force'" [headerHeight]="50"
+                [footerHeight]="50" [scrollbarH]="true" [limit]="50" [rowHeight]="50">
+
+                <ngx-datatable-column [frozenLeft]="true" name="Actions" [flexGrow]="1">
+
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <button mat-icon-button [disabled]="btnUpdateRemove" *ngIf="RemoveLink" mat-sm-button color="primary" class="mr-1"
+                      (click)="deleteItem(row,rowIndex)">Remove</button>
+
+
+
+
+
+                    <button mat-icon-button mat-sm-button [disabled]='row.total_bids !="0"' *ngIf="Inactive"
+                      color="primary" class="mr-1" (click)="InactiveData(row)">Remove</button>
+                  </ng-template>
+
+                </ngx-datatable-column>
+
+
+                <ngx-datatable-column name="Image" [flexGrow]="1">
+
+
+
+
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <img src="{{ row?.cover_image}}" alt="" width="50px" height="30px">
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Inventory Title" [flexGrow]="1">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row?.inventory_title }}
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Category">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row"
+                    style="margin-top: 10px;">
+                    {{ row?.inv_type }}
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Registration No" [flexGrow]="1">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row?.category_type}}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Contract No" [flexGrow]="1">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row?.subcategory_type}}
+                  </ng-template>
+                </ngx-datatable-column>
+
+
+
+                <!-- <ngx-datatable-column name="Start At" [flexGrow]="1">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row?.start_at  | date :'dd-MM-yyyy HH:MM'}}
+                  </ng-template>
+                </ngx-datatable-column> -->
+                <ngx-datatable-column name="Min Bid Amount" [flexGrow]="1">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row?.min_bid_amount }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <!-- <ngx-datatable-column name="Max Bid Amount" [flexGrow]="1">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row?.max_bid_amount }}
+                  </ng-template>
+                </ngx-datatable-column> -->
+
+
+
+              </ngx-datatable>
+
+
+
+
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div fxLayout="row">
+
+          <button mat-raised-button color="accents" matStepperPrevious>Back</button>
+          <span fxFlex="8px"></span>
+          <button mat-raised-button color="primary" *ngIf="btnSave && CheckPermission('add')"
+            (click)="submit()">Submit</button>
+          <span fxFlex="8px"></span>
+
+          <button mat-raised-button color="primary" *ngIf="btnUpdate && CheckPermission('update')"
+            (click)="update()">Update</button>
+          <span fxFlex="8px"></span>
+          <!-- <button mat-raised-button color="accent" *ngIf="btnApprove" (click)="ApproveAction()">Approve</button> -->
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-card-content>
+</mat-card>

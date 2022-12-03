@@ -1,0 +1,73 @@
+  <mat-card-title class="">
+      <div class="card-title-text">User Registration 
+        <!-- <a  title="Back" (click)="back()" style=" float: right !important; vertical-align: top !important; color: purple !important;">
+          <mat-icon>arrow_back</mat-icon>
+        </a>  -->
+        <button style="float: right ; vertical-align: inherit;" mat-icon-button mat-dialog-close class="closeDel">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <br>
+      <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
+    <p style="font-size: x-small;  color: red;">Fields marked with * are mandatory</p>
+      <form [formGroup]="AdminRegForm">
+          <div fxLayout="row wrap">
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+               <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <mat-label>Party Type</mat-label>
+                    <mat-select required [disableOptionCentering]="true" [formControl]="AdminRegForm.controls['party_type_id']" (selectionChange)="onSelectParty($event.value)">
+                      <mat-option  *ngFor="let type of PartyTypeArray" [value]="type.id" > {{type.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div> 
+                <div  *ngIf="!ChannelPartnerRegistration" class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input required matInput  placeholder="User Name" [formControl]="AdminRegForm.controls['username']" >
+                  </mat-form-field>
+                </div>
+                <div   *ngIf="ChannelPartnerRegistration" class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input required matInput  pattern="[7896][0-9]{9}" maxlength="10" minlength="10" (keypress)="numberOnly($event)" type="text" placeholder="Mobile Number" [formControl]="AdminRegForm.controls['username']" >
+                  </mat-form-field>
+                </div>
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input  required matInput  placeholder="Email" [formControl]="AdminRegForm.controls['email_id']" >
+                  </mat-form-field>
+                </div>
+          
+              </div>
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                 <div class="pb-1">
+                   <mat-form-field class="full-width">
+                     <mat-label>Party Sub Type</mat-label>
+                     <mat-select  required [disableOptionCentering]="true" [formControl]="AdminRegForm.controls['party_sub_type_id']">
+                       <mat-option  *ngFor="let type of SubPartyTypeArray" [value]="type.id" > {{type.name}}</mat-option>
+                     </mat-select>
+                   </mat-form-field>
+                 </div> 
+                 <div class="pb-1">
+                   <mat-form-field class="full-width">
+                     <input required matInput  placeholder="Full Name" [formControl]="AdminRegForm.controls['full_name']" >
+                   </mat-form-field>
+                 </div>
+                 <div *ngIf="ChannelPartnerRegistration" class="pb-1">
+                  <mat-form-field class="full-width">
+                    <mat-label>Evaluator</mat-label>
+                    <mat-select required [disableOptionCentering]="true" [formControl]="AdminRegForm.controls['evaluator_code']" >
+                      <mat-option  *ngFor="let type of Evaluator" [value]="type.evaluator_code" > {{type.agency_name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div> 
+            
+               </div>
+             
+          </div>
+          <button  mat-raised-button  *ngIf="!isASubmit"  class="bg" (click)="Save()"  >Save</button>
+          &nbsp;&nbsp;<button  mat-raised-button   class="bg"   *ngIf="isASubmit" (click)="Update()"  >Update</button>
+          &nbsp;&nbsp;<button   mat-dialog-close class="closeDel" type="reset"  mat-raised-button  (click)="onClear()">Cancel</button>
+      </form>
+  </mat-card-content>

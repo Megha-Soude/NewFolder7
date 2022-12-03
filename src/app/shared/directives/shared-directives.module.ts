@@ -1,0 +1,37 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { FontSizeDirective } from './font-size.directive';
+import { ScrollToDirective } from './scroll-to.directive';
+import { AppDropdownDirective } from './dropdown.directive';
+import { DropdownAnchorDirective } from './dropdown-anchor.directive';
+import { DropdownLinkDirective } from './dropdown-link.directive';
+import { EgretSideNavToggleDirective } from './egret-side-nav-toggle.directive';
+import { EgretSidenavHelperDirective, EgretSidenavTogglerDirective } from './egret-sidenav-helper/egret-sidenav-helper.directive';
+import { EgretHighlightDirective } from './egret-highlight.directive';
+import { AlphaNumbericDirective } from './alpha-numberic.directive';
+import { NumbericDirective } from './numberic.directive';
+
+
+const directives = [
+  FontSizeDirective,
+  ScrollToDirective,
+  AppDropdownDirective,
+  DropdownAnchorDirective,
+  DropdownLinkDirective,
+  EgretSideNavToggleDirective,
+  EgretSidenavHelperDirective,
+  EgretSidenavTogglerDirective,
+  EgretHighlightDirective,
+  AlphaNumbericDirective,
+  NumbericDirective
+]
+
+@NgModule({
+  imports: [
+    CommonModule
+  ],
+  declarations: directives,
+  exports: directives
+})
+export class SharedDirectivesModule {}

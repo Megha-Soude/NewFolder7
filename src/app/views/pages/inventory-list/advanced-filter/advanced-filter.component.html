@@ -1,0 +1,244 @@
+<div class="handle" *ngIf="!isCustomizerOpen">
+  <button mat-fab color="primary" (click)="isCustomizerOpen = true">
+    <mat-icon title=" Advanced Search" class="spin text-white">search</mat-icon>
+  </button>
+</div>
+
+<form [formGroup]="itemForm">
+<div id="app-customizer" *ngIf="isCustomizerOpen">
+  <mat-card style="margin-top: 71px;" class="p-0">
+    <mat-card-title class="m-0 light-gray">
+      <div style="color: white; background-color: rgba(16, 23, 76, 0.96) !important;" class="card-title-text"
+        fxLayout="row wrap" fxLayoutAlign="center center">
+       
+        Advanced Search
+        <span fxFlex="15px"></span>
+        
+        <span fxFlex></span>
+        <button class="card-control" mat-icon-button (click)="isCustomizerOpen = false">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </mat-card-title>
+
+
+    <mat-card-content [perfectScrollbar] *ngIf="viewMode === 'options'">
+      <p><small></small></p>
+    
+
+
+    
+
+
+    
+
+
+      <div class="pb-1 mb-1 border-bottom">
+        <h6 class="title text-muted">Search By Details</h6>
+
+        
+
+        <!-- <mat-form-field class="filterwidthrow">
+          <input  maxlength="100" [formControl]="itemForm.controls['inventory_code']" matInput type="text" placeholder="Inventory Code">
+         
+        </mat-form-field>
+
+
+        <mat-form-field class="filterwidthrow">
+          <input  maxlength="100" [formControl]="itemForm.controls['mobile_number']" matInput type="text" placeholder="Mobile Number">
+          
+        </mat-form-field> -->
+
+        <mat-form-field class="filterwidth">
+          <input  maxlength="100" [formControl]="itemForm.controls['yard_code']" matInput type="text" placeholder="Yard Code">
+        
+        </mat-form-field>
+
+        <mat-form-field class="filterwidth">
+          <input  maxlength="100" [formControl]="itemForm.controls['yard_name']" matInput type="text" placeholder="Yard Name">
+        
+        </mat-form-field>
+        <!-- <mat-form-field class="filterwidthrow">
+          <input  maxlength="100" [formControl]="itemForm.controls['yard_city']" matInput type="text" placeholder="Yard City">
+        
+        </mat-form-field>
+
+        <mat-form-field class="filterwidthrow">
+          <input  maxlength="100" [formControl]="itemForm.controls['yard_region']" matInput type="text" placeholder="Yard Region">
+         
+        </mat-form-field> -->
+
+        <!-- <mat-form-field class="filterwidthrow">
+          <input  maxlength="100" [formControl]="itemForm.controls['yard_state']" matInput type="text" placeholder="Yard State">
+        
+        </mat-form-field> -->
+
+
+        <mat-form-field class="filterwidth" >
+          <mat-label>State</mat-label>
+          <mat-select (selectionChange)="OnchangeState($event.value)" [formControl]="itemForm.controls['yard_state']"  disableRipple>
+            <mat-option *ngFor="let Sate of States" value={{Sate.state_name}}>{{Sate.state_name}}</mat-option>
+            
+          </mat-select>
+        </mat-form-field>
+
+
+        <!-- <mat-form-field class="filterwidth" >
+          <mat-label>District</mat-label>
+          <mat-select (selectionChange)="OnchangeState($event.value)" [formControl]="itemForm.controls['state']"  disableRipple>
+            <mat-option *ngFor="let District of District" value={{District}}>{{District}}</mat-option>
+            
+          </mat-select>
+        </mat-form-field> -->
+
+        <mat-form-field class="filterwidthrow">
+          <input   maxlength="100" [formControl]="itemForm.controls['year_of_manufacture']" matInput type="text" placeholder="Year of Manufacture">
+         
+        </mat-form-field>
+
+        <mat-form-field class="filterwidthrow">
+          <input   maxlength="100" [formControl]="itemForm.controls['registration_number']" matInput type="text" placeholder="Registration Number">
+         
+        </mat-form-field>
+        
+
+
+        <mat-form-field class="filterwidthrow">
+          <input   maxlength="100" [formControl]="itemForm.controls['contract_no']" matInput type="text" placeholder="Contract Number">
+         
+        </mat-form-field>
+
+
+
+        <mat-form-field class="filterwidthrow">
+          <mat-label>Availablity Status</mat-label>
+          <mat-select [formControl]="itemForm.controls['availablity_status']"  disableRipple>
+            <mat-option value="INVENTORY">INVENTORY</mat-option>
+            <mat-option value="AUCTION">AUCTION</mat-option>
+            <mat-option value="SOLD">SOLD</mat-option>
+         
+          </mat-select>
+        </mat-form-field>
+
+
+        
+
+
+        <mat-form-field class="filterwidthrow">
+          <mat-label>Approved Status</mat-label>
+          <mat-select [formControl]="itemForm.controls['approved_status']"  disableRipple>
+            <mat-option value="APPROVED">APPROVED</mat-option>
+            <mat-option value="PENDING">PENDING</mat-option>
+            <mat-option value="DISAPPROVED">DISAPPROVED</mat-option>
+
+
+          
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field class="filterwidthrow">
+          <mat-label>Evaluation Status</mat-label>
+          <mat-select [formControl]="itemForm.controls['evaluation_type']"  disableRipple>
+            <mat-option value="YES">COMPLETED</mat-option>
+            <mat-option value="NO">PENDING</mat-option>
+          
+
+
+          
+          </mat-select>
+        </mat-form-field>
+
+      
+        <mat-form-field class="filterwidthrow" 
+        (click)="picker?.open()" >
+          <input readonly matInput [formControl]="itemForm.controls['from_date']" matInput [matDatepicker]="picker" placeholder="From Date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="filterwidthrow" 
+        (click)="picker1?.open()">
+          <input readonly matInput  [formControl]="itemForm.controls['to_date']"  matInput [matDatepicker]="picker1" placeholder="To Date">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+        
+        <mat-form-field class="filterwidthrow" 
+          (click)="picker2?.open()" >
+            <input readonly matInput [formControl]="itemForm.controls['from_reposs_date']" matInput [matDatepicker]="picker2" placeholder="From Reposs Date">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="filterwidthrow" 
+          (click)="picker3?.open()">
+            <input readonly matInput  [formControl]="itemForm.controls['to_reposs_date']"  matInput [matDatepicker]="picker3" placeholder="To Reposs Date">
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+          </mat-form-field>
+
+
+
+          <mat-form-field class="filterwidthrow" 
+          (click)="picker4?.open()" >
+            <input readonly matInput [formControl]="itemForm.controls['from_evaluator_date']" matInput [matDatepicker]="picker4" placeholder="From Evaluator Date">
+            <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+            <mat-datepicker #picker4></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="filterwidthrow" 
+          (click)="picker5?.open()">
+            <input readonly matInput  [formControl]="itemForm.controls['to_evaluator_date']"  matInput [matDatepicker]="picker5" placeholder="To Evaluator Date">
+            <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+            <mat-datepicker #picker5></mat-datepicker>
+          </mat-form-field>
+
+
+          <mat-form-field class="filterwidth">
+            <input   maxlength="100" [formControl]="itemForm.controls['evaluation_agency']" matInput type="text" placeholder="Evaluation Agency">
+           
+          </mat-form-field>
+
+
+
+        
+
+
+
+        <!-- <mat-form-field class="filterwidthrow">
+          <mat-label>PPT</mat-label>
+          <mat-select [formControl]="itemForm.controls['ppt']"      [disableOptionCentering]="true" placeholder="PPT"  
+          >
+          <mat-option  *ngFor="let PPT of PPTDATA" [value]="PPT.ppt" > {{PPT.ppt}} </mat-option>
+        </mat-select>
+        </mat-form-field> -->
+
+
+
+
+      </div>
+
+
+
+      <div class="pb-1 mb-1 border-bottom">
+        
+
+        <button mat-raised-button (click)="Search()"  color="primary">Search</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button (click)="reset()"  color="warn">Reset</button>
+
+      </div>
+
+
+
+      
+    
+
+
+
+
+
+
+    
+    </mat-card-content>
+  </mat-card>
+</div>
+</form>

@@ -1,0 +1,142 @@
+<div class="handle" *ngIf="!isCustomizerOpen">
+  <button mat-fab color="primary" (click)="isCustomizerOpen = true">
+    <mat-icon title=" Advanced Search" class="spin text-white">search</mat-icon>
+  </button>
+</div>
+
+<form [formGroup]="itemForm">
+<div id="app-customizer" *ngIf="isCustomizerOpen">
+  <mat-card style="margin-top: 71px;" class="p-0">
+    <mat-card-title class="m-0 light-gray">
+      <div style="color: white; background-color: rgba(16, 23, 76, 0.96) !important;" class="card-title-text"
+        fxLayout="row wrap" fxLayoutAlign="center center">
+       
+        Advanced Search
+        <span fxFlex="15px"></span>
+        
+        <span fxFlex></span>
+        <button class="card-control" mat-icon-button (click)="isCustomizerOpen = false">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </mat-card-title>
+
+
+    <mat-card-content [perfectScrollbar] *ngIf="viewMode === 'options'">
+      <p><small></small></p>
+    
+
+
+    
+
+
+    
+
+
+      <div class="pb-1 mb-1 border-bottom">
+        <h6 class="title text-muted">Search By Details</h6>
+
+        
+
+        
+
+        <mat-form-field class="full-width">
+          <input  maxlength="100" [formControl]="itemForm.controls['contract_no']" matInput type="text" placeholder="Contract No">
+        
+        </mat-form-field>
+
+    
+
+        <mat-form-field class="filterwidthrow" 
+        (click)="picker?.open()" >
+          <input readonly matInput [formControl]="itemForm.controls['from_date']" matInput [matDatepicker]="picker" placeholder="From Date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+
+        <mat-form-field class="filterwidthrow" 
+        (click)="picker1?.open()">
+          <input readonly matInput  [formControl]="itemForm.controls['to_date']"  matInput [matDatepicker]="picker1" placeholder="To Date">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+
+
+
+        <!-- <mat-form-field class="filterwidthrow">
+          <mat-label>Availablity Status</mat-label>
+          <mat-select [formControl]="itemForm.controls['open_auction_type']"  disableRipple>
+            <mat-option value="Open">OPEN</mat-option>
+            <mat-option value="Closed">CLOSED</mat-option>
+         
+         
+          </mat-select>
+        </mat-form-field> -->
+
+        
+        <!-- <mat-form-field class="filterwidthrow">
+          <mat-label>Auction Type</mat-label>
+          <mat-select [formControl]="itemForm.controls['auction_type']"  disableRipple>
+            <mat-option value="current">Current</mat-option>
+            <mat-option value="upcoming">Upcoming</mat-option>
+            <mat-option value="closed">CLOSED</mat-option>
+         
+          </mat-select>
+        </mat-form-field>
+
+
+
+
+        
+        <mat-form-field class="filterwidthrow">
+          <mat-label>Approved Status</mat-label>
+          <mat-select [formControl]="itemForm.controls['auction_status']"  disableRipple>
+            <mat-option value="APPROVED">APPROVED</mat-option>
+            <mat-option value="PENDING">PENDING</mat-option>
+            <mat-option value="DISAPPROVED">DISAPPROVED</mat-option>
+            <mat-option value="CANCELLED">CANCELLED</mat-option>
+
+
+          
+          </mat-select>
+        </mat-form-field> -->
+
+
+
+        
+
+
+
+
+
+
+      </div>
+
+
+
+      <div class="pb-1 mb-1 border-bottom">
+        
+
+        <button mat-raised-button (click)="Search()"  color="primary">Search</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button (click)="reset()"  color="warn">Reset</button>
+
+      </div>
+
+
+
+      
+    
+
+
+
+
+
+
+    
+    </mat-card-content>
+  </mat-card>
+</div>
+</form>

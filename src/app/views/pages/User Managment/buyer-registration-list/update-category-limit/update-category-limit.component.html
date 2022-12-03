@@ -1,0 +1,38 @@
+<mat-card-title class="">
+  <div class="card-title-text">User Vehicle Limit
+    <button style="float: right ; vertical-align: inherit;" mat-icon-button mat-dialog-close class="closeDel">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <br>
+  <mat-divider></mat-divider>
+</mat-card-title>
+<mat-card-content>
+  <p style="font-size: x-small;  color: red;">Fields marked with * are mandatory</p>
+  <form [formGroup]="UpdateCategoryLimitForm">
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-xs="100" class="pr-1">
+        <div class="pb-1">
+          <mat-form-field class="full-width">
+            <mat-label>Categotry</mat-label>
+            <mat-select required [disableOptionCentering]="true" 
+              [formControl]="UpdateCategoryLimitForm.controls['category']">
+              <mat-option value="Normal" selected (click)="disable('Normal')"> Normal</mat-option>
+              <mat-option value="TMF Dealer/TASS" (click)="disable('TMF Dealer/TASS')"> TMF Dealer/TASS</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="pb-1" *ngIf="!isShown">
+          <mat-form-field class="full-width">
+            <input required matInput maxlength="9" (keypress)="numberOnly($event)" placeholder="Limit"
+              [formControl]="UpdateCategoryLimitForm.controls['vehicle_limit']">
+          </mat-form-field>
+        </div>
+
+      </div>
+    </div>
+    <button mat-raised-button class="yellow-btn" (click)="onSubmit()">Save</button>
+    &nbsp;&nbsp;<button mat-dialog-close class="closeDel blue-btn" type="reset" mat-raised-button
+      (click)="onClear()">Cancel</button>
+  </form>
+</mat-card-content>

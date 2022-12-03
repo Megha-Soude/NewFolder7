@@ -1,0 +1,295 @@
+<mat-card class="p-0">
+  <mat-card-title class="" style="background: #f6f6f6;">
+    <div class="card-title-text">Inventory List</div>
+    <mat-divider></mat-divider>
+   <!--  <div style="margin: 5px;" fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}">
+      <div style="align-self: center;" fxFlex="100" fxFlex.gt-sm="67">
+      
+    <a style="font-weight: normal !important;" [innerHtml]="FilterString"></a>
+      </div>
+    <div fxFlex="100" fxFlex.gt-sm="17">
+      <button *ngIf="isdisablereport"  (click)="ReportExport()" style="float: left;" mat-stroked-button color="primary">
+        Export to Excel &nbsp; <mat-icon>
+          cloud_download</mat-icon> </button>
+
+
+          <button disabled *ngIf="!isdisablereport"  style="float: left; color: red;" mat-stroked-button color="warn">
+            {{this.pendingcount}}/{{config.totalItems}} &nbsp; <mat-icon>
+              sync</mat-icon> </button>
+
+          
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="15">
+      <button style="float: right;" mat-stroked-button color="primary">Total Rows :
+        {{config.totalItems}}</button>
+    </div> 
+</div>-->
+  </mat-card-title>
+  <!-- <mat-tab-group #tabRef style="background: #f6f6f6;">
+    <mat-tab label="Vehicles" style="overflow: none !important;"> -->
+  <mat-card-content class="p-0">
+    <div class="shop-wrap" fxLayout="row" fxLayoutWrap="wrap">
+
+      <div class="full-width">
+
+        <div style="margin-top: 5px;" fxLayout="row" fxLayout.lt-sm="column" class="shop-top-toolbar">
+          <!-- <button mat-icon-button class="mr-1">
+                <mat-icon>search</mat-icon>
+              </button> -->
+          <div class="product-search-wrap">
+
+            <!-- <input type="text" name="searchProduct" placeholder="Search Inventory" (keyup)='updateFilter($event)'
+                  class="product-search default-bg full-width"> -->
+            <a style="font-weight: normal !important;" [innerHtml]="FilterString"></a>
+          </div>
+          <span fxFlex></span>
+          <div [fxHide.lt-md]="true" style="display: flex;">
+            <button mat-icon-button [color]="viewMode === 'list-view' ? 'warn' : 'primary'" (click)="viewMode = 'list-view'">
+              <mat-icon>format_list_bulleted</mat-icon>
+            </button>
+            <button mat-icon-button [color]="viewMode === 'grid-view' ? 'warn' : 'primary'" (click)="viewMode = 'grid-view'">
+              <mat-icon>apps</mat-icon>
+            </button>
+            <button *ngIf="CheckPermission('add')" mat-raised-button (click)="Addvevhileclick('')"
+              style="background-color: purple; margin-top: inherit; color: white;">Add Inventory</button>
+            &nbsp;
+            <button *ngIf="CheckPermission('upload')" mat-raised-button (click)="AddBulkIpload()"
+              style="background-color: purple; margin-top: inherit; color: white;">Bulk upload</button>
+              &nbsp;
+              <!-- <div fxFlex="100" fxFlex.gt-sm="17"> -->
+              <button  *ngIf="isdisablereport"  (click)="ReportExport()" 
+              style="background-color: purple; margin-top: inherit; color: white;" mat-raised-button  color="primary">
+                Export to Excel &nbsp; <mat-icon>
+                  cloud_download</mat-icon> </button>
+                  
+        
+                  <button disabled *ngIf="!isdisablereport"
+                   style="background-color: purple; margin-top: inherit; color: white;" mat-raised-button  color="warn">
+                    {{this.pendingcount}}/{{config.totalItems}} &nbsp; <mat-icon>
+                      sync</mat-icon> </button>
+                    <!-- </div> -->
+                      &nbsp;
+                      <!-- <div fxFlex="100" fxFlex.gt-sm="15"> -->
+                      <button style="background-color: purple; margin-top: inherit; color: white;" mat-raised-button  color="primary">Total Rows :
+                        {{config.totalItems}}</button>
+                      <!-- </div> -->
+          </div>
+        </div>
+
+        <div class="product-container" [ngClass]="{'list-view': viewMode === 'list-view'}">
+
+          <div class="product-wrap" *ngFor="let product of FinaldataData | paginate: config;let i=index;">
+            <div class="product-inner default-bg">
+              <div *ngIf="product?.badge?.text" class="product-badge mat-elevation-z7"
+                [ngStyle]="{background: product?.badge?.color || '#f44336'}">
+                <span>{{product?.badge?.text}}</span>
+              </div>
+              <img src="./assets/images/sold-stamp.png" *ngIf="product?.availablity_status == 'SOLD'"
+                class="soldout_image">
+              <div class="img-container">
+                <img class="img-to-fit" class="" [ngClass]="product?.availablity_status == 'SOLD' ? 'imgblur' : ''"
+                  [src]="product.image_url" alt="" />
+              </div>
+
+              <div class="info-wrap p-1">
+                <div class="main-info">
+                  <h3 class="title">{{product.inventory_title}}</h3>
+                  
+                  <p class="text-muted p-line">
+                    <strong>Registration Number:</strong> {{product?.registration_number}}
+                  </p>
+
+                  <p class="text-muted p-line">
+                    <strong>Year of Manufacture :</strong> {{product?.year_of_manufacture}}
+                  </p>
+
+                  <p class="text-muted p-line">
+                    <strong>Contract Number :</strong> {{product?.contract_no}}
+                  </p>
+
+
+                  
+                  <!--     
+                      <p class="text-muted p-line">
+                        <strong>Registration No: </strong>
+                        <span >{{product?.RegistrationNumber}} </span>
+                      </p> -->
+
+                  <p class="text-muted p-line">
+                    <strong>Category:</strong> {{product?.ppt_name}}
+                  </p>
+
+                  <p class="text-muted p-line">
+                    <strong>Approved Status:</strong> {{product?.approved_status}}
+                  </p>
+
+                  <p class="text-muted p-line">
+                    <strong>Evaluation Status:</strong> <a
+                      [ngStyle]="{'color': product?.evaluation_done? 'green' : 'red'}"> {{product?.evaluation_done ?
+                      'COMPLETED' : 'PENDING'}}</a>
+                  </p>
+                  
+                  <!-- <p style="margin-top: 10px;">
+                    <button *ngIf="product?.approved_status === 'PENDING' || product?.approved_status === 'DISAPPROVED'" mat-raised-button (click)="StatusUpdate(product,'APPROVED')"  color="primary">Approve</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button *ngIf="product?.approved_status === 'APPROVED' "  (click)="StatusUpdate(product,'DISAPPROVED')" mat-raised-button color="warn">Disapprove</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button mat-raised-button  (click)="Addvevhileclick(product)" color="accent">View</button>
+                
+                  </p> -->
+
+
+
+                  <p *ngIf="CheckPermission('approval')" style="margin-top: 10px;">
+                    <button class="actionbtn" [disabled]="Disableornot(product?.approved_status,product?.availablity_status)" mat-raised-button
+                      (click)="StatusUpdate(product,'APPROVED')" color="primary">Approve</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="actionbtn" [disabled]="DisableornotDisapprove(product?.approved_status,product?.availablity_status) "
+                      (click)="StatusUpdateDisapprove(product,'DISAPPROVED')" mat-raised-button
+                      color="warn">Disapprove</button>
+                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button mat-raised-button  (click)="Addvevhileclick(product)" color="accent">View</button> -->
+
+                  </p>
+
+
+
+                  <p style="margin-top: 10px;">
+                    <button class="actionbtn" mat-raised-button (click)="Addvevhileclick(product)"
+                      color="accent">View</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button [disabled]="product?.availablity_status == 'SOLD'"  *ngIf="CheckPermission('sold')  "  class="actionbtn" mat-raised-button (click)="Sold(product)"
+                      color="warn">Release Vehicle</button>
+
+
+                  </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+                <div class="actions">
+                  <div class="price-rating">
+                    <div class="product-rating">
+
+                    </div>
+                    <div class="price">
+                      <span>{{product?.price?.sale | currency:'INR'}}</span>
+                      <del class="text-muted">{{product?.price?.previous | currency:'INR'}}</del>
+                    </div>
+
+                  </div>
+                  <div class="add-to-cart">
+                    <span fxFlex></span>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="more-info-wrap p-1">
+                <div class="more-info">
+                  <div class="more-actions mb-1">
+                    <div class="product-rating">
+
+                      <small class="text-muted"></small>
+                    </div>
+                    <span fxFlex></span>
+
+                  </div>
+
+                  <div>
+                   
+                    <p class="text-muted p-line">
+                      <strong>Chassis No:</strong> {{product?.chassis_no}}
+                    </p>
+
+
+                    <p class="text-muted p-line">
+                      <strong>Days in Stock:</strong> {{product?.days_in_stock }}
+                    </p>
+
+
+
+                    <p class="text-muted p-line">
+                      <strong>Yard:</strong> {{product?.yard_code }}-{{product?.yard_name}}
+                    </p>
+
+                    <p class="text-muted p-line">
+                      <strong>Yard State:</strong> {{product?.yard_state }} <strong>Region :</strong>
+                      {{product?.yard_region }}
+                    </p>
+
+                    <!-- <p class="text-muted p-line">
+                                <strong>Yard Region:</strong> {{product?.yard_region }} </p> -->
+
+                                
+                    <p class="text-muted p-line">
+                      <strong>Inventory Date:</strong> {{product?.created_at | date :'dd-MM-yyyy hh:mm:ss a'}}
+                    </p>
+
+                    <p class="text-muted p-line">
+                      <strong>Availablity Status:</strong> {{product?.availablity_status}}
+                    </p>
+
+                    <p class="text-muted p-line">
+                      <strong>Evaluation Date:</strong> {{product?.evaluator_date | date :'dd-MM-yyyy'}}
+                    </p>
+
+                    <p class="text-muted p-line">
+                      <strong>Vehicle Amount:</strong> {{product?.bid_start_price}}
+                    </p>
+
+                    <!-- <p class="text-muted p-line">
+                              <strong>Evaluation Report:</strong> <a   (click)="getUrl(product.inventory_documents)" >link</a></p> -->
+
+                    <!-- <p style="margin-top: 10px;">
+                          <button mat-raised-button (click)="Sold(product,'Sold')" color="warn">Mark as Sold</button>
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+
+
+                        </p> -->
+
+                  </div>
+
+
+
+
+
+
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+          <!-- End Product -->
+          <app-advanced-filter (messageEvent)="receiveMessage($event)"></app-advanced-filter>
+          <div class="Data" *ngIf="FinaldataData.length==0">
+            <strong>No Data Found</strong>
+
+          </div>
+          <div class="products-pagination" *ngIf="config.totalItems>10">
+            <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+  </mat-card-content>
+  <!-- </mat-tab>
+
+  </mat-tab-group> -->
+
+</mat-card>

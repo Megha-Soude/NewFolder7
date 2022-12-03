@@ -1,0 +1,11 @@
+.main-footer {
+    background-color: purple;
+    color: white;
+}
+
+
+
+::ng-deep .footer-slate .main-footer {
+    background: purple !important;
+    color: #ffffff !important;
+}

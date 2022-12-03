@@ -1,0 +1,52 @@
+<button style="float: right" mat-icon-button mat-dialog-close class="closeDel">
+  <mat-icon>close</mat-icon>
+</button>
+<p>
+  Inventory Bulk Upload
+</p>
+
+<mat-grid-list cols="2" rowHeight="2:1">
+
+  <mat-grid-tile>
+    <div >
+
+      <b style="color: red;">Instruction:</b>
+      
+        <br />1.Download Template from   <a style="color: blue;" href="./assets/Samples/inventorysample.xlsx">here</a>
+        <br />2.Change Data
+        <br />3.Upload the Excel File (Accept only xlsx File)
+     
+
+
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-card-content style="margin-top: 100px; text-align: center;">
+      <label>
+
+        &nbsp; &nbsp; &nbsp; &nbsp;
+        <input #inputFile type="file" (change)="SelectDocumentFiles($event)" style="display:none" />
+
+        <a mat-raised-button color="primary">
+          <mat-icon>file_upload</mat-icon>
+          Upload Excel
+        </a>
+
+        &nbsp; &nbsp; &nbsp; &nbsp;
+        <a style="color: blue;" href="./assets/Samples/inventorysample.xlsx">Download Template</a>
+
+
+      </label>
+
+
+
+
+
+
+
+      <!-- <button mat-raised-button  style="width: 100px;"  color="accent" class="mr-1" (click)="BtnClick(row)">View</button> -->
+    </mat-card-content>
+  </mat-grid-tile>
+
+
+</mat-grid-list>

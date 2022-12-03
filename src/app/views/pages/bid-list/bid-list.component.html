@@ -1,0 +1,246 @@
+<mat-card >
+
+
+  <mat-card-title class="">
+    <div class="textFont card-title-text">Bid List</div>
+
+    
+
+  </mat-card-title>
+
+
+  <mat-tab-group [color]="'warn'" (selectedTabChange)="TabChange($event)" [selectedIndex]="selectedTab">
+    <mat-tab style="background-color: violet !important; " label="Current Auction's Bids">
+      <mat-card-content>
+
+        <mat-card class="p-0" >
+
+          <mat-card-content class="p-0">
+
+        
+            <!-- <div style="margin: 5px;" fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}">
+              <div style="align-self: center;" fxFlex="100" fxFlex.gt-sm="67">
+                <a [innerHtml]="FilterString"></a>
+              </div>
+              <div fxFlex="100" fxFlex.gt-sm="17">
+                <button *ngIf="isdiableeporrt"  (click)="ReportExport()" style="float: left;" mat-stroked-button color="primary">
+                  Export to Excel &nbsp; <mat-icon>
+                    cloud_download</mat-icon> </button>
+
+
+                    <button disabled *ngIf="!isdiableeporrt"  style="float: left; color: red;" mat-stroked-button color="warn">
+                      {{this.pendingcount}}/{{this.ecomcount}} &nbsp; <mat-icon>
+                        sync</mat-icon> </button>
+
+                   
+              </div>
+              <div fxFlex="100" fxFlex.gt-sm="15">
+                <button style="float: right;" mat-stroked-button color="primary">Total Rows :
+                  {{ecomcount}}</button>
+              </div>
+            </div> -->
+           
+
+            <ngx-datatable #mydatatable3 class="material ml-0 mr-0" [rows]="items" [columnMode]="'force'" [headerHeight]="40"
+            [footerHeight]="40" [scrollbarH]="true" [limit]="page.size" [count]="page.totalElements" [rowHeight]="35"
+            [externalPaging]="true">
+      
+      
+      
+      
+      
+            <ngx-datatable-column [sortable]="false" name="Image" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <!-- {{ row?.image_url}} -->
+                <img src={{row?.auction_detail?.inventory?.cover_image}} alt="" width="50px" height="30px">
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [sortable]="false" [width]=220 name="Auction Title" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row?.auction_detail?.auction?.auction_title}}
+              </ng-template>
+            </ngx-datatable-column>
+      
+            <ngx-datatable-column [sortable]="false" [width]=230 name="Inventory Title">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row?.auction_detail?.inventory?.inventory_title}}
+              </ng-template>
+            </ngx-datatable-column>
+      
+
+
+            <ngx-datatable-column [sortable]="false" [width]=150 name="User Name">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row?.user?.full_name}}
+              </ng-template>
+            </ngx-datatable-column>
+
+
+            <ngx-datatable-column [sortable]="false" [width]=150 name="Mobile Number">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row?.user?.mobile_number}}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column  [sortable]="false" name="No Of Bids" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <button title="View" mat-icon-button mat-sm-button color="primary" class="mr-1" (click)="ViewLogs(row)">{{row?.bid_logs?.length}}</button>
+                <!-- <button mat-icon-button mat-sm-button color="warn" (click)="deleteItem(row)">Delete</button> -->
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column [sortable]="false" [width]=150 name="State">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row?.user?.state}}
+              </ng-template>
+            </ngx-datatable-column>
+
+
+            <ngx-datatable-column [sortable]="false" [width]=150 name="District">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row?.user?.district}}
+              </ng-template>
+            </ngx-datatable-column>
+
+
+      
+      
+           
+      
+      
+            <ngx-datatable-column [sortable]="false" name="Status" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row?.status }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [sortable]="false" name="Last Bid Amount" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row?.bid_amount }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [sortable]="false"  [width]=200  name="last Bid Date" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row?.created_at| date :'dd-MM-yyyy hh:mm:ss a' }}
+              </ng-template>
+            </ngx-datatable-column>
+           
+
+
+        
+         
+          </ngx-datatable>
+
+
+          </mat-card-content>
+        </mat-card>
+
+
+
+
+      </mat-card-content>
+      <!-- <app-order-advance-filter  [childMessage]="curenttab" (messageEvent)="receiveMessage($event)"></app-order-advance-filter> -->
+    </mat-tab>
+
+
+
+    <mat-tab style="background-color: violet !important; " label="Closed Auction Bids">
+      <mat-card-content>
+
+        <mat-card class="p-0" >
+
+          <mat-card-content class="p-0">
+
+        
+            <!-- <div style="margin: 5px;" fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}">
+              <div style="align-self: center;" fxFlex="100" fxFlex.gt-sm="67">
+                <a [innerHtml]="FilterString"></a>
+              </div>
+              <div fxFlex="100" fxFlex.gt-sm="17">
+                <button *ngIf="isdiableeporrt"  (click)="ReportExport()" style="float: left;" mat-stroked-button color="primary">
+                  Export to Excel &nbsp; <mat-icon>
+                    cloud_download</mat-icon> </button>
+
+
+                    <button disabled *ngIf="!isdiableeporrt"  style="float: left; color: red;" mat-stroked-button color="warn">
+                      {{this.pendingcount}}/{{this.ecomcount}} &nbsp; <mat-icon>
+                        sync</mat-icon> </button>
+
+                   
+              </div>
+              <div fxFlex="100" fxFlex.gt-sm="15">
+                <button style="float: right;" mat-stroked-button color="primary">Total Rows :
+                  {{ecomcount}}</button>
+              </div>
+            </div>
+            -->
+
+            <ngx-datatable class="material ml-0 mr-0" [rows]="items" [columnMode]="'force'" [headerHeight]="40"
+            [footerHeight]="40" [scrollbarH]="true" [limit]="page.size" [count]="page.totalElements" [rowHeight]="35"
+            [externalPaging]="true">
+      
+      
+      
+      
+      
+            <ngx-datatable-column [sortable]="false" name="Image" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <!-- {{ row?.image_url}} -->
+                <img src={{row?.auction_detail?.inventory?.cover_image}} alt="" width="50px" height="30px">
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [sortable]="false" [width]=220 name="Auction Title" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row?.auction_detail?.auction?.auction_title}}
+              </ng-template>
+            </ngx-datatable-column>
+      
+            <ngx-datatable-column [sortable]="false" [width]=230 name="Inventory Title">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row?.auction_detail?.inventory?.inventory_title}}
+              </ng-template>
+            </ngx-datatable-column>
+      
+      
+           
+      
+      
+            <ngx-datatable-column [sortable]="false" name="Status" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row?.status }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [sortable]="false" name="Bid Amount" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row?.bid_amount }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [sortable]="false" name="Bid Date" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row?.created_at| date :'dd-MM-yyyy hh:mm:ss a' }}
+              </ng-template>
+            </ngx-datatable-column>
+           
+         
+          </ngx-datatable>
+
+
+          </mat-card-content>
+        </mat-card>
+
+
+
+
+      </mat-card-content>
+      <!-- <app-order-advance-filter  [childMessage]="curenttab" (messageEvent)="receiveMessage($event)"></app-order-advance-filter> -->
+    </mat-tab>
+
+   
+
+
+
+
+
+
+
+  </mat-tab-group>
+</mat-card>

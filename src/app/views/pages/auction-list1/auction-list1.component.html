@@ -1,0 +1,296 @@
+<mat-card class="p-0">
+  <mat-card-title class="" style="background: #f6f6f6;">
+    <div class="card-title-text">Auction List</div>
+    <mat-divider class="mb-5"></mat-divider>
+  </mat-card-title>
+  <!--<div style="margin: 5px;" fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}">
+    <div style="align-self: center;" fxFlex="100" fxFlex.gt-sm="67">
+    
+  <a style="font-weight: normal !important;" [innerHtml]="FilterString"></a>
+    </div>
+   <div fxFlex="100" fxFlex.gt-sm="17">
+    <button *ngIf="isdisablereport"  (click)="ReportExport()" style="float: left;" mat-stroked-button color="primary">
+      Export to Excel &nbsp; <mat-icon>
+        cloud_download</mat-icon> </button>
+
+
+        <button disabled *ngIf="!isdisablereport"  style="float: left; color: red;" mat-stroked-button color="warn">
+          {{this.pendingcount}}/{{config.totalItems}} &nbsp; <mat-icon>
+            sync</mat-icon> </button>
+
+        
+  </div>
+  <div fxFlex="100" fxFlex.gt-sm="15">
+    <button style="float: right;" mat-stroked-button color="primary">Total Rows :
+      {{config.totalItems}}</button>
+  </div> 
+</div>-->
+  <!-- <mat-tab-group #tabRef  style="background: #f6f6f6;"> -->
+  <!-- <mat-tab label="Auctions" style="overflow: none !important;">  -->
+  <mat-card-content class="p-0 mb-5">
+    <div fxLayout="row" fxLayout.lt-sm="column" class="shop-top-toolbar">
+      <!-- <div class="product-search-wrap">
+        <a style="font-weight: normal !important;" [innerHtml]="FilterString"></a>
+      </div> -->
+      <span fxFlex></span>
+      <div [fxHide.lt-md]="true">
+        <button mat-icon-button [color]="viewMode === 'list-view' ? 'warn' : 'primary'"
+          (click)="viewMode = 'list-view'">
+          <mat-icon>format_list_bulleted</mat-icon>
+        </button>
+        <button mat-icon-button [color]="viewMode === 'grid-view' ? 'warn' : 'primary'"
+          (click)="viewMode = 'grid-view'">
+          <mat-icon>apps</mat-icon>
+        </button>
+        <button *ngIf="CheckPermission('add')" mat-raised-button (click)="AddAuctionClick()"
+          style="background-color: purple; margin-top: inherit; color: white;">Add Auction</button>
+        &nbsp;
+
+       <button *ngIf="isdisablereport" (click)="ReportExport()"
+          style="background-color: purple; margin-top: inherit; color: white;" mat-raised-button
+          color="primary">
+       {{ selectedAuctionType === "CUSTOMER" ? 'Export Customer List to Excel' : 'Export Bidder List to Excel'}} &nbsp; <mat-icon>
+            cloud_download</mat-icon> </button>
+         
+     
+
+        <!-- <button *ngIf="product?.open_auction_type === 'current';isdisablereport" (click)="ReportExport()"
+          style="background-color: purple; margin-top: inherit; color: white;" mat-raised-button
+          color="primary">
+         Export Customer to Excel &nbsp; <mat-icon>
+            cloud_download</mat-icon> </button> -->
+        <button disabled *ngIf="!isdisablereport"
+          style="background-color: purple; margin-top: inherit; color: white;" mat-raised-button color="warn">
+          {{this.pendingcount}}/{{config.totalItems}} &nbsp; <mat-icon>
+            sync</mat-icon> </button>
+        &nbsp;
+        <button style="background-color: purple; margin-top: inherit; color: white;" mat-raised-button
+          color="primary">Total Rows :
+          {{config.totalItems}}</button>
+      </div>
+    </div>
+    <mat-tab-group #tabRef style="background: #f6f6f6;" (selectedTabChange)="tabChange($event)">
+      <mat-tab label="Customer" style="overflow: none !important;">
+        <div class="shop-wrap" fxLayout="row" fxLayoutWrap="wrap">
+          <div class="full-width">
+            <div class="product-container" [ngClass]="{'list-view': viewMode === 'list-view'}">
+              <div class="product-wrap" *ngFor="let product of items | paginate: config;let i=index;">
+                <div class="product-inner default-bg">
+                  <div *ngIf="product?.badge?.text" class="product-badge mat-elevation-z7"
+                    [ngStyle]="{background: product?.badge?.color || '#f44336'}">
+                    <span>{{product?.badge?.text}}</span>
+                  </div>
+                  <img src="./assets/images/sold-stamp.png" *ngIf="product?.inventory_status == 'SOLD'"
+                    class="soldout_image">
+                  <div class="img-container">
+                    <img class="img-to-fit" class="" [ngClass]="product?.inventory_status == 'SOLD' ? 'imgblur' : ''"
+                      [src]="product.cover_image" alt="" />
+                  </div>
+                  <div class="info-wrap p-1">
+                    <div class="main-info">
+                      <h3 class="title">{{product.auction_title}}</h3>
+                      <p class="text-muted p-line">
+                        <strong>Auction Code:</strong> {{product?.auction_code}}
+                      </p>
+                      <p class="text-muted p-line">
+                        <strong>Interval:</strong> {{product?.interval}}
+                      </p>
+                      <!-- <div class="blink_me">BLINK ME</div> -->
+                      <p class="text-muted p-line">
+                        <strong>Start Date:</strong> {{product?.start_at | date :'dd-MM-yyyy hh:mm:ss a'}}
+                      </p>
+                      <p class="text-muted p-line">
+                        <strong>End Date:</strong> {{product?.end_at | date :'dd-MM-yyyy hh:mm:ss a'}}
+                      </p>
+                      <p *ngIf="product?.open_auction_type == 'current'" class="text-muted p-line">
+                        <strong>Auction Status:</strong> <a class="blink_me">
+                          {{product?.open_auction_type | titlecase }}</a> </p>
+                      <p *ngIf="product?.open_auction_type !== 'current'" class="text-muted p-line">
+                        <strong>Auction Status:</strong> <a style="font-size: medium;"
+                          [ngStyle]="{'color':product.open_auction_type === 'closed' ? 'red' : '#d38740'}">
+                          {{product?.open_auction_type | titlecase}}</a> </p>
+                      <p *ngIf="CheckPermission('approval')" style="margin-top: 10px;">
+                        <button [disabled]="product?.auction_status == 'APPROVED'" class="actionbtn" mat-raised-button
+                          (click)="StatusUpdate(product,'APPROVED')" color="primary">Approve</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="actionbtn" [disabled]="product?.auction_status == 'DISAPPROVED'"
+                          (click)="StatusUpdateDisapprove(product,'DISAPPROVED')" mat-raised-button
+                          color="warn">Disapprove </button>
+                      </p>
+                      <p style="margin-top: 10px;">
+                        <button *ngIf="CheckPermission('view')" class="actionbtn " mat-raised-button
+                          (click)="ViewDetail(product)" color="accent">View</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <button *ngIf="product.open_auction_type == 'upcoming'"
+                          [disabled]="product?.auction_status == 'CANCELLED'" class="actionbtn " mat-raised-button
+                          (click)="StatusUpdateDisapprove(product,'CANCELLED')" color="accent">Cancel</button>
+                        <!-- <button class="actionbtn" mat-raised-button (click)="Sold(product,'Sold')" color="warn">Mark as Sold</button> -->
+                      </p>
+                    </div>
+                    <div class="actions">
+                      <div class="price-rating">
+                        <div class="product-rating">
+                        </div>
+                        <div class="price">
+                          <span>{{product?.price?.sale | currency:'INR'}}</span>
+                          <del class="text-muted">{{product?.price?.previous | currency:'INR'}}</del>
+                        </div>
+                      </div>
+                      <div class="add-to-cart">
+                        <span fxFlex></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="more-info-wrap p-1">
+                    <div class="more-info">
+                      <div class="more-actions mb-1">
+                        <div class="product-rating">
+                          <small class="text-muted"></small>
+                        </div>
+                        <span fxFlex></span>
+                      </div>
+                      <div>
+                        <p class="text-muted p-line">
+                          <strong>Inventory Count:</strong> {{product?.inventory_count}}</p>
+                        <p class="text-muted p-line">
+                          <strong>Approval Status:</strong> {{product?.auction_status | titlecase }} </p>
+                        <!-- <p class="text-muted p-line">
+                                    <strong>Yard Region:</strong> {{product?.yard_region }} </p> -->
+                        <p class="text-muted p-line">
+                          <strong>Auction Created Date:</strong> {{product?.created_at | date :'dd-MM-yyyy hh:mm:ss a'}}
+                        </p>
+                        <p class="text-muted p-line">
+                          <strong>Total Bids:</strong> {{product?.total_bids}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Product -->
+              <app-auction-filters (messageEvent)="receiveMessage($event)"></app-auction-filters>
+              <div class="Data" *ngIf="items.length == 0">
+                <strong>No Data Found</strong>
+              </div>
+              <div class="products-pagination" *ngIf="config.totalItems>10">
+                <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Bidder" style="overflow: none !important;">
+        <div class="shop-wrap" fxLayout="row" fxLayoutWrap="wrap">
+          <div class="full-width">
+            <div class="product-container" [ngClass]="{'list-view': viewMode === 'list-view'}">
+              <div class="product-wrap" *ngFor="let product of items | paginate: config;let i=index;">
+                <div class="product-inner default-bg">
+                  <div *ngIf="product?.badge?.text" class="product-badge mat-elevation-z7"
+                    [ngStyle]="{background: product?.badge?.color || '#f44336'}">
+                    <span>{{product?.badge?.text}}</span>
+                  </div>
+                  <img src="./assets/images/sold-stamp.png" *ngIf="product?.inventory_status == 'SOLD'"
+                    class="soldout_image">
+                  <div class="img-container">
+                    <img class="img-to-fit" class="" [ngClass]="product?.inventory_status == 'SOLD' ? 'imgblur' : ''"
+                      [src]="product.cover_image" alt="" />
+                  </div>
+                  <div class="info-wrap p-1">
+                    <div class="main-info">
+                      <h3 class="title">{{product.auction_title}}</h3>
+                      <p class="text-muted p-line">
+                        <strong>Auction Code:</strong> {{product?.auction_code}}
+                      </p>
+                      <p class="text-muted p-line">
+                        <strong>Interval:</strong> {{product?.interval}}
+                      </p>
+                      <!-- <div class="blink_me">BLINK ME</div> -->
+                      <p class="text-muted p-line">
+                        <strong>Start Date:</strong> {{product?.start_at | date :'dd-MM-yyyy hh:mm:ss a'}}
+                      </p>
+                      <p class="text-muted p-line">
+                        <strong>End Date:</strong> {{product?.end_at | date :'dd-MM-yyyy hh:mm:ss a'}}
+                      </p>
+                      <p *ngIf="product?.open_auction_type == 'current'" class="text-muted p-line">
+                        <strong>Auction Status:</strong> <a class="blink_me">
+                          {{product?.open_auction_type | titlecase }}</a> </p>
+                      <p *ngIf="product?.open_auction_type !== 'current'" class="text-muted p-line">
+                        <strong>Auction Status:</strong> <a style="font-size: medium;"
+                          [ngStyle]="{'color':product.open_auction_type === 'closed' ? 'red' : '#d38740'}">
+                          {{product?.open_auction_type | titlecase}}</a> </p>
+                      <p *ngIf="CheckPermission('approval')" style="margin-top: 10px;">
+                        <button [disabled]="product?.auction_status == 'APPROVED'" class="actionbtn" mat-raised-button
+                          (click)="StatusUpdate(product,'APPROVED')" color="primary">Approve</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="actionbtn" [disabled]="product?.auction_status == 'DISAPPROVED'"
+                          (click)="StatusUpdateDisapprove(product,'DISAPPROVED')" mat-raised-button
+                          color="warn">Disapprove </button>
+                      </p>
+                      <p style="margin-top: 10px;">
+                        <button *ngIf="CheckPermission('view')" class="actionbtn " mat-raised-button
+                          (click)="ViewDetail(product)" color="accent">View</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <button *ngIf="product.open_auction_type == 'upcoming'"
+                          [disabled]="product?.auction_status == 'CANCELLED'" class="actionbtn " mat-raised-button
+                          (click)="StatusUpdateDisapprove(product,'CANCELLED')" color="accent">Cancel</button>
+                        <!-- <button class="actionbtn" mat-raised-button (click)="Sold(product,'Sold')" color="warn">Mark as Sold</button> -->
+                      </p>
+                    </div>
+                    <div class="actions">
+                      <div class="price-rating">
+                        <div class="product-rating">
+                        </div>
+                        <div class="price">
+                          <span>{{product?.price?.sale | currency:'INR'}}</span>
+                          <del class="text-muted">{{product?.price?.previous | currency:'INR'}}</del>
+                        </div>
+                      </div>
+                      <div class="add-to-cart">
+                        <span fxFlex></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="more-info-wrap p-1">
+                    <div class="more-info">
+                      <div class="more-actions mb-1">
+                        <div class="product-rating">
+                          <small class="text-muted"></small>
+                        </div>
+                        <span fxFlex></span>
+                      </div>
+                      <div>
+                        <p class="text-muted p-line">
+                          <strong>Inventory Count:</strong> {{product?.inventory_count}}</p>
+                        <p class="text-muted p-line">
+                          <strong>Approval Status:</strong> {{product?.auction_status | titlecase }} </p>
+                        <!-- <p class="text-muted p-line">
+                                    <strong>Yard Region:</strong> {{product?.yard_region }} </p> -->
+                        <p class="text-muted p-line">
+                          <strong>Auction Created Date:</strong> {{product?.created_at | date :'dd-MM-yyyy hh:mm:ss a'}}
+                        </p>
+                        <p class="text-muted p-line">
+                          <strong>Total Bids:</strong> {{product?.total_bids}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Product -->
+              <app-auction-filters (messageEvent)="receiveMessage($event)"></app-auction-filters>
+              <div class="Data" *ngIf="items.length==0">
+                <strong>No Data Found</strong>
+              </div>
+              <div class="products-pagination" *ngIf="config.totalItems>10">
+                <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+  </mat-card-content>
+  <!-- </mat-tab> -->
+
+  <!-- </mat-tab-group> -->
+
+</mat-card>

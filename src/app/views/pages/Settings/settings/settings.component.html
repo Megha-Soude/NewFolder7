@@ -1,0 +1,106 @@
+<mat-card class="p-0">
+  <mat-card-title class="" style="background: #f6f6f6;">
+    <div class="card-title-text">Settings</div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-tab-group #tabRef  style="background: #f6f6f6;" (selectedTabChange)="tabChange($event)"> 
+  <mat-tab label="Customer" style="overflow: none !important;"> 
+  <mat-card-content class="p-0">
+
+    <form [formGroup]="Form">
+
+
+      <div class="container">
+        <!-- <mat-form-field style="width: 20%"></mat-form-field> -->
+
+
+        <mat-form-field style="width: 40%" class="margin-333" appearance="outline">
+          <mat-label>Bid amount mark up Percentage</mat-label>
+          <input (change)="ChangePercentage($event)" (keypress)="isNumberKey($event)" minlength="1"
+            [formControl]="Form.controls['Percentage']" maxlength="5" type="text" min="1" max="100" matInput
+            placeholder="Bid amount mark up Percentage" />
+        </mat-form-field>
+        <!-- <p style="color: red;" *ngIf="Showerror">Please enter a value between 0.1 and 100</p> -->
+
+
+
+        <button (click)="Submit('Percentage1')" mat-raised-button color="primary">Submit</button>
+        <a class="margin-333"> <strong>Current Percentage :</strong>{{LastPercentage}}%</a> <a  (click)="ViewLogs('Percentage')"  style="color: blue;font-size: smaller; margin-left: 15px; ">View log</a>
+        <!-- <button mat-stroked-button color="primary">View Log</button> -->
+
+      
+      </div>
+
+      <div class="container">
+        <div style="width: 20%"></div>
+        <mat-form-field style="width: 40%" class="margin-333" appearance="outline">
+          <mat-label>No. of bid attempts allowed per vehicle</mat-label>
+          <input (keypress)="isNumberKey($event)" [formControl]="Form.controls['NoOfbids']" minlength="1" maxlength="3"
+            type="text" min="1" max="100" matInput placeholder="No. of bid attempts allowed per vehicle" />
+        </mat-form-field>
+
+
+        <button (click)="Submit('NoofBidsAllow1')" mat-raised-button color="primary">Submit</button>
+
+        <a class="margin-333"> <strong>Current No. of bid attempts allowed per vehicle:</strong>{{lastNoofbids}}</a><a  (click)="ViewLogs('NoofBidsAllow1')"  style="color: blue;font-size: smaller; margin-left: 15px;">View log</a>
+        <!-- <a></a>
+        <button mat-stroked-button color="primary">View Log</button> -->
+      </div>
+    </form>
+  </mat-card-content>
+
+
+  </mat-tab>
+
+  
+
+  <mat-tab label="Bidder" style="overflow: none !important;">
+     
+    <mat-card-content class="p-0">
+
+      <form [formGroup]="Form">
+  
+  
+        <div class="container">
+          <!-- <mat-form-field style="width: 20%"></mat-form-field> -->
+  
+  
+          <mat-form-field style="width: 40%" class="margin-333" appearance="outline">
+            <mat-label>Bid amount mark up Percentage</mat-label>
+            <input (change)="ChangePercentage($event)" (keypress)="isNumberKey($event)" minlength="1"
+              [formControl]="Form.controls['Percentage']" maxlength="5" type="text" min="1" max="100" matInput
+              placeholder="Bid amount mark up Percentage" />
+          </mat-form-field>
+          <!-- <p style="color: red;" *ngIf="Showerror">Please enter a value between 0.1 and 100</p> -->
+  
+  
+  
+          <button (click)="Submit('Percentage1')" mat-raised-button color="primary">Submit</button>
+          <a class="margin-333"> <strong>Current Percentage :</strong>{{LastPercentage}}%</a> <a  (click)="ViewLogs('Percentage')"  style="color: blue;font-size: smaller; margin-left: 15px; ">View log</a>
+          <!-- <button mat-stroked-button color="primary">View Log</button> -->
+  
+  
+  
+  
+        </div>
+  
+        <div class="container">
+          <div style="width: 20%"></div>
+          <mat-form-field style="width: 40%" class="margin-333" appearance="outline">
+            <mat-label>No. of bid attempts allowed per vehicle</mat-label>
+            <input (keypress)="isNumberKey($event)" [formControl]="Form.controls['NoOfbids']" minlength="1" maxlength="3"
+              type="text" min="1" max="100" matInput placeholder="No. of bid attempts allowed per vehicle" />
+          </mat-form-field>
+  
+  
+          <button (click)="Submit('NoofBidsAllow1')" mat-raised-button color="primary">Submit</button>
+  
+          <a class="margin-333"> <strong>Current No. of bid attempts allowed per vehicle:</strong>{{lastNoofbids}}</a><a  (click)="ViewLogs('NoofBidsAllow1')"  style="color: blue;font-size: smaller; margin-left: 15px;">View log</a>
+          <!-- <a></a>
+          <button mat-stroked-button color="primary">View Log</button> -->
+        </div>
+      </form>
+    </mat-card-content>
+
+  </mat-tab>
+<!-- </mat-card> -->

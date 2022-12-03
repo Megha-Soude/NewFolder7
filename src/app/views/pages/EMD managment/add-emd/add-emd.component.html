@@ -1,0 +1,177 @@
+<mat-card class="p-0">
+  <mat-card-title class="">
+    <div class="card-title-text text-left">Add EMD Balance</div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content style="margin-top: 20px !important;">
+    <form [formGroup]="emdForm">
+      <div fxLayout="row wrap">
+
+        <div fxFlex="100" fxFlex.gt-xs="50" style="padding-right: 10px;">
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <input maxlength="10" (keypress)="special_number($event)" class="text-capitalize" matInput
+                [formControl]="emdForm.controls['mobile_number']" placeholder="Mobile Number">
+            </mat-form-field>
+          </div>
+        </div>
+
+
+        <div fxFlex="100" fxFlex.gt-xs="50">
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <mat-label>Payment Mode</mat-label>
+              <mat-select class="readonly-block readonly-wrapper" [disableOptionCentering]="true"
+                [formControl]="emdForm.controls['payment_type']">
+                <mat-option (click)="toggleShow('hide'); checkValidation('Cash')" value="Cash">Cash</mat-option>
+                <!-- <mat-option (click)="toggleShow('show'); checkValidation('Cheque')" value="CHQ">Cheque</mat-option>
+                <mat-option (click)="toggleShow('show'); checkValidation('RTGS')" value="R">R.T.G.S</mat-option> -->
+                <mat-option (click)="toggleShow('show'); checkValidation('DD')" value="DD">Demand Draft (D.D)
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-xs="50" style="padding-right: 10px;">
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <input maxlength="8" (keypress)="special_number($event)" class="text-capitalize" matInput
+                [formControl]="emdForm.controls['amount']" placeholder="EMD Amount">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- <div fxFlex="100" fxFlex.gt-xs="50" >
+          <div class="pb-1">
+            <mat-card-content style="margin-top: 100px; text-align: center;">
+              <label>
+                <input #inputFile type="file" (change)="SelectDocumentFiles($event)" style="display:none" />
+                <a mat-raised-button color="primary">
+                  <mat-icon>file_upload</mat-icon>
+                  Upload Document
+                </a>
+              </label>
+            </mat-card-content>
+          </div>
+        </div> -->
+
+        <div *ngIf="isShown" fxFlex="100" fxFlex.gt-xs="50" style="padding-right: 10px;">
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <input maxlength="50" class="text-capitalize" matInput (keypress)="alphanumbericOnly($event)"
+                [formControl]="emdForm.controls['bank_name']" placeholder="Bank Name">
+            </mat-form-field>
+          </div>
+        </div>
+        <div *ngIf="isShown" fxFlex="100" fxFlex.gt-xs="50" style="padding-right: 10px;">
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <input maxlength="20" class="text-capitalize" matInput (keypress)="alphanumbericOnly($event)"
+                [formControl]="emdForm.controls['bank_code']" placeholder="Bank Code">
+            </mat-form-field>
+          </div>
+        </div>
+        <div *ngIf="isShown" fxFlex="100" fxFlex.gt-xs="50" style="padding-right: 10px;">
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <input maxlength="20" class="text-capitalize" matInput [formControl]="emdForm.controls['cheque_dd_no']"
+                placeholder="Cheque/D.D. No.">
+            </mat-form-field>
+          </div>
+        </div>
+        <div *ngIf="isShown" fxFlex="100" fxFlex.gt-xs="50" style="padding-right: 10px;">
+          <div class="pb-1">
+            <mat-form-field class="full-width" (click)="datestart?.open()">
+              <mat-label>Cheque/D.D. Date</mat-label>
+              <input matInput readonly [matDatepicker]="datestart" [formControl]="emdForm.controls['cheque_dd_date']">
+              <mat-datepicker-toggle matSuffix [for]="datestart"></mat-datepicker-toggle>
+              <mat-datepicker #datestart></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div *ngIf="isShown" fxFlex="100" fxFlex.gt-xs="50" style="padding-right: 10px;">
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <mat-label>MICR</mat-label>
+              <mat-select class="readonly-block readonly-wrapper" [disableOptionCentering]="true"
+                [formControl]="emdForm.controls['micr_nonmicr']">
+                <mat-option value="1">MICR</mat-option>
+                <mat-option value="0">NON MICR</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div *ngIf="isShown" fxFlex="100" fxFlex.gt-xs="50" style="padding-right: 10px;">
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <mat-label>Local Outstation</mat-label>
+              <mat-select class="readonly-block readonly-wrapper" [disableOptionCentering]="true"
+                [formControl]="emdForm.controls['local_outstation']">
+                <mat-option value="1">Local</mat-option>
+                <mat-option value="0">Out Station</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div *ngIf="isShown" fxFlex="100" fxFlex.gt-xs="50" style="padding-right: 10px;">
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <input maxlength="10" class="text-capitalize" matInput (keypress)="alphanumbericOnly($event)"
+                [formControl]="emdForm.controls['rtgs_utr_no']" placeholder="R.T.G.S UTR No.">
+            </mat-form-field>
+          </div>
+        </div>
+        <div *ngIf="isShown" fxFlex="100" fxFlex.gt-xs="50" style="padding-right: 10px;">
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <mat-label>Bank Type</mat-label>
+              <mat-select class="readonly-block readonly-wrapper" [disableOptionCentering]="true"
+                [formControl]="emdForm.controls['coop_noncoop']">
+                <mat-option value="0">Co-operative</mat-option>
+                <mat-option value="1">Non Co-operative</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-xs="50" style="padding-right: 10px;">
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <mat-label>Company Code DD</mat-label>
+              <mat-select class="readonly-block readonly-wrapper" (selectionChange)="getBranchData($event.value)"
+                [disableOptionCentering]="true" [formControl]="emdForm.controls['company_code']">
+                <mat-option *ngFor="let objCC of companyCodeListData" [value]="objCC.comp_code">{{objCC?.comp_code}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-xs="50" style="padding-right: 10px;">
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <mat-label>Branch Code</mat-label>
+              <mat-select class="readonly-block readonly-wrapper" [disableOptionCentering]="true"
+                [formControl]="emdForm.controls['brh_code']">
+                <mat-option *ngFor="let objBrnch of BranchListData" [value]="objBrnch.sap_sac_code">
+                  {{objBrnch?.branch}} ({{objBrnch?.sap_sac_code}})
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div fxFlex="100" fxFlex.gt-xs="100">
+          <div class="pb-1">
+            <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+            &nbsp;&nbsp;<button mat-raised-button color="warn" (click)="onReset()">Reset</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+
+
+<!-- <input type="file" (change)="onFolderSelected($event)" webkitdirectory multiple/> -->

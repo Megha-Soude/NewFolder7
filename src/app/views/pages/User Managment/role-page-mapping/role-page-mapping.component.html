@@ -1,0 +1,100 @@
+<mat-card class="p-0">
+  <mat-card-title class="">
+    <div class="card-title-text">Access Management</div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="itemForm">
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+          <div class="pb-1">
+            <mat-form-field appearance="outline" class="full-width">
+
+              <mat-label>Select Party Type</mat-label>
+              <mat-select [disabled]="RoleTypeDisabled" class="readonly-block readonly-wrapper"
+                (selectionChange)="OnselectedParty($event.value)" [disableOptionCentering]="true"
+                [formControl]="itemForm.controls['party_type_id']">
+                <mat-option *ngFor="let type of PartyTypeArray" [value]="type.id"> {{type.name}}</mat-option>
+
+              </mat-select>
+
+            </mat-form-field>
+
+
+
+
+          </div>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-xs="50">
+          <div class="pb-1">
+            <mat-form-field appearance="outline" class="full-width">
+
+              <mat-label>Select Sub Party Type</mat-label>
+              <mat-select (selectionChange)="OnselectedSubPartyType($event.value)" [disableOptionCentering]="true"
+                [formControl]="itemForm.controls['party_sub_type_id']">
+                <mat-option *ngFor="let Position of SubPartyTypeArray" [value]="Position.id"> {{Position.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+
+
+        </div>
+      </div>
+
+      <div fxLayout="row wrap">
+        <!-- <ngx-datatable style="width: 100%" class="material" [rows]="rows" [columnMode]="'force'" [headerHeight]="50"
+            [footerHeight]="50" [rowHeight]="'auto'" [limit]="100" [selected]="selected" [selectionType]="'checkbox'"
+            [selectAllRowsOnPage]="false"   > -->
+        <ngx-datatable  [offset]="tableOffset" style="width: 100%" class="material" [rows]="rows" [columnMode]="'force'" [headerHeight]="40"
+          [footerHeight]="40" [rowHeight]="35" [limit]="10" [selected]="selected" [selectionType]="'checkbox'"
+          [selectAllRowsOnPage]="false">
+
+          <ngx-datatable-column  [sortable]="false" name="Status" [width]="30" [sortable]="false" [draggable]="false">
+
+            <ng-template let-row="row" ngx-datatable-cell-template let-value="value" let-isSelected="isSelected"
+              let-onCheckboxChangeFn="onCheckboxChangeFn">
+              <input type="checkbox" [checked]="row.has_access" (change)="onCheckboxChangeFn($event)" />
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column [sortable]="false" style="text-align: center;" [draggable]="false" name="Sub Menu">
+            <ng-template let-row="row" style="text-align: center;" ngx-datatable-cell-template>
+
+              {{ row?.page_detail_name}}
+
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column [sortable]="false" style="text-align: center;" name="Main Menu">
+            <ng-template let-row="row" style="text-align: center;" ngx-datatable-cell-template>
+              {{ row?.page_name }}
+            </ng-template>
+          </ngx-datatable-column>
+
+
+
+          <ngx-datatable-column [sortable]="false" style="text-align: center;" name="Permission">
+            <ng-template let-row="row" style="text-align: center;" ngx-datatable-cell-template>
+              {{ row?.permission_name}}
+            </ng-template>
+          </ngx-datatable-column>
+
+
+
+
+
+
+
+        </ngx-datatable>
+        <button mat-raised-button color="primary" (click)="save()">Submit</button>
+
+
+      </div>
+
+
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,40 @@
+<mat-card class="p-0">
+  <mat-card-title class="" style="background: #f6f6f6;">
+    <div class="card-title-text">Inventory Images Bulk Update</div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <!-- <mat-tab-group #tabRef  style="background: #f6f6f6;"> -->
+  <!-- <mat-tab label="Auctions" style="overflow: none !important;">  -->
+  <mat-card-content class="p-0">
+    <mat-grid-list cols="2" rowHeight="2:1">
+      <mat-grid-tile>
+        <div>
+          <b style="color: red;">Instruction:</b>
+          <!-- <br />1.Download Template from   <a style="color: blue;" href="./assets/Samples/update_inventry.xlsx">here</a>
+        <br />2.Change Data -->
+          <br />1.Upload the Zip File (Accept only .zip File)
+          <br />2.Add Inventory Images and Evaluation Report(.pdf) in same File(.zip)
+          <br />3.Max size 25 MB .
+          <br />4.File Name should be same as Contract Number.
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-card-content style="margin-top: 100px; text-align: center;">
+          <label>
+            &nbsp; &nbsp; &nbsp; &nbsp;
+            <input #inputFile type="file" multiple accept=".zip,.Zip" (change)="SelectDocumentFiles($event)"
+              style="display:none" />
+            <a mat-raised-button color="primary">
+              <mat-icon>file_upload</mat-icon>
+              Upload Zip File
+            </a>
+            <!-- &nbsp; &nbsp; &nbsp; &nbsp;
+        <a style="color: blue;" href="./assets/Samples/update_inventry.xlsx">Download Template</a> -->
+          </label>
+          <!-- <button mat-raised-button  style="width: 100px;"  color="accent" class="mr-1" (click)="BtnClick(row)">View</button> -->
+        </mat-card-content>
+      </mat-grid-tile>
+
+
+    </mat-grid-list>
+  </mat-card-content>

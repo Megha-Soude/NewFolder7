@@ -1,0 +1,106 @@
+.ngx-datatable.material {
+    .datatable-header {
+      .datatable-header-cell {
+        // your styles here
+       //font-size: 10in;
+       // font-weight: 700;
+        background-color:#999999 !important;
+        color:white;
+        font-size: inherit;
+        font-weight: bold;
+        text-align: center;
+       // text-decoration-color: whitesmoke;
+  
+      }
+    }
+  }
+    ::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
+      min-width: 0!important;
+      padding: 3px!important;
+      margin: 3px!important;
+     }
+  
+     .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell {
+   
+      text-align: center !important;
+    }
+    datatable-scroller { width: 100% !important; }
+
+
+
+
+    .ngx-datatable.material {
+      .datatable-header {
+        .datatable-header-cell {
+          // your styles here
+         //font-size: 10in;
+         // font-weight: 700;
+          background-color:#999999 !important;
+          color:white;
+          font-size: inherit;
+          font-weight: bold;
+          text-align: center;
+         // text-decoration-color: whitesmoke;
+    
+        }
+      }
+    }
+      ::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
+        min-width: 0!important;
+        padding: 3px!important;
+        margin: 3px!important;
+       }
+    
+       .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell {
+     
+        text-align: center !important;
+      }
+      datatable-scroller { width: 100% !important; }
+    
+    
+    
+  
+  
+      .datatable-row-detail { width: 100vw; }
+
+
+
+      
+
+::ng-deep .egret-navy .mat-flat-button.mat-accent, .egret-navy .mat-raised-button.mat-accent, .egret-navy .mat-fab.mat-accent, .egret-navy .mat-mini-fab.mat-accent {
+  // background-color: #801580 !important;
+   background: linear-gradient(45deg, #89288e 0%, #d38740 100%) !important;
+ }
+ ::ng-deep .egret-navy .mat-flat-button.mat-accent, .egret-navy .mat-raised-button.mat-accent, .egret-navy .mat-fab.mat-accent, .egret-navy .mat-mini-fab.mat-accent {
+     color: #fff !important
+ }
+ 
+ 
+ .bg{
+   background: linear-gradient(45deg, #89288e 0%, #d38740 100%) !important;
+ }
+
+
+ ::ng-deep .error{
+  color:red !important;
+}
+
+::ng-deep .age-is-ten{ 
+  .my-data-table {
+  background : pink; height: 1000px;
+color: red; }
+}
+
+
+
+ .buttons{
+   width: 200px;
+   margin: 0;
+   display: inline;
+ }
+
+ .action_btn{
+  width: 200px;
+  margin: 0;
+  display: inline;
+ }

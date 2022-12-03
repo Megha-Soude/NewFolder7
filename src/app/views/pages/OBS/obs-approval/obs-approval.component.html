@@ -1,0 +1,121 @@
+<mat-card class="p-0" [@animate]="{value:'*',params:{y:'50px',delay:'300ms'}}">
+  <mat-card-title class="">
+    <div class="card-title-text">OBS Approval List
+      <!-- <div style="align-self: center;" fxFlex="100" fxFlex.gt-sm="67">
+        <a [innerHtml]="FilterString"></a>
+      </div> -->
+      <div style="
+      margin-left: 53%;" fxFlex="100" fxFlex.gt-sm="17">
+    <button *ngIf="isdiableeporrt" (click)="reportDownload()"
+    style="background-color: purple; margin-top: inherit; color: white;" mat-raised-button  color="primary">
+      Export to Excel &nbsp; <mat-icon>
+        cloud_download</mat-icon> </button>
+        
+
+        <button disabled *ngIf="!isdiableeporrt"   
+        style="background-color: purple; margin-top: inherit; color: white;" mat-raised-button  color="warn">
+          {{this.pendingcount}}/{{this.TotalCount}} &nbsp; <mat-icon>
+            sync</mat-icon> </button>
+          </div>
+            &nbsp;
+            <div fxFlex="100" fxFlex.gt-sm="15">
+            <button style="background-color: purple; margin-top: inherit; color: white;" mat-raised-button  color="primary">Total Rows :
+              {{TotalCount}}</button>
+              </div>
+            </div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  
+  <mat-card-content class="p-0">
+  
+    <!-- <div fxLayout="row wrap"> -->
+      <ngx-datatable  #mydatatable5 class="material ml-0 mr-0 my-data-table" [rows]="items" [columnMode]="'force'" [headerHeight]="50"
+      [footerHeight]="50" [scrollbarH]="true" [limit]="page.size" [count]="page.totalElements" [rowHeight]="35"
+      [externalPaging]="true" (page)="setPage($event)" [offset]="tableOffset">
+
+        <ngx-datatable-column  [frozenLeft]="true" [width]="220" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-header-template ngx-datatable-cell-template let-value="value"
+          let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                                        <input type="checkbox" (change)="allCheckbox(items, $event)"/>
+                                    </ng-template>
+          <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template let-value="value" let-isSelected="isSelected"
+            let-onCheckboxChangeFn="onCheckboxChangeFn">
+            <input type="checkbox" [checked]="allCheckboxIds.includes(row.id)" (change)="checkbox($event, rowIndex, row.id)" />
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [frozenLeft]="true" [width]="220" [flexGrow]="1" name="Bid Amount">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row?.bid_amount ? row?.bid_amount : '-'}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [flexGrow]="1" [width]="150" name="Auction Title">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row?.auction?.auction_title ? row?.auction?.auction_title : '-'}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [flexGrow]="1" [width]="150" name="Auction Date">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row?.auction?.created_at ? (row?.auction?.created_at | date: 'dd.MM.yyyy' :'IST') : '-'}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [flexGrow]="1" [width]="150" name="Inventory Title">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row?.inventory?.inventory_title ? row?.inventory?.inventory_title : '-'}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [flexGrow]="1" [width]="150" name="Inventory Date">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row?.inventory?.created_at ? (row?.inventory?.created_at | date: 'dd.MM.yyyy' :'IST') : '-'}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [flexGrow]="1" [width]="250" name="Chassis Invoice Value">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row?.inventory.chassis_invoice_value ? row?.inventory.chassis_invoice_value : '-'}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [flexGrow]="1" [width]="250" name="Contract No">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row?.inventory.contract_no ? row?.inventory.contract_no : '-'}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [flexGrow]="1" [width]="250" [draggable]="false" name="Avg Sale Price">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row?.inventory.average_sale_price ? row?.inventory.average_sale_price : '-'}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [flexGrow]="1" [width]="250" name="Finance Approve Status">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row?.finance_approval_status ? row?.finance_approval_status : '-'}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [flexGrow]="1" [width]="250" name="Next Approval Level">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row?.next_approval_level ? row?.next_approval_level : '-'}}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [flexGrow]="1" [width]="250" name="Final Approval">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row?.is_final_approval}}
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+      <textarea rows="5" placeholder="Please Enter Remarks" maxlength="100" style="resize: none;margin: 10px;" [(ngModel)]="remarks" *ngIf="allCheckboxIds?.length > 0"></textarea><br />
+      <button mat-raised-button color="primary" style="margin: 10px;" (click)="save('APPROVED')" [disabled]="items.length === 0">Approve</button>
+      <button mat-raised-button color="warn" style="margin: 10px;" (click)="save('NOT APPROVED')" [disabled]="items.length === 0">Reject</button>
+    <!-- </div> -->
+  </mat-card-content>
+</mat-card>
+
+<app-obs-filter (messageEvent)="receiveMessage($event)">
+</app-obs-filter>

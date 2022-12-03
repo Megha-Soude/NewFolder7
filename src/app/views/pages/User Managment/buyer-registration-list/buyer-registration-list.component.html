@@ -1,0 +1,213 @@
+<mat-card class="p-0" [@animate]="{value:'*',params:{y:'50px',delay:'300ms'}}">
+  <mat-card-title class="">
+    <div class="card-title-text">Buyer Users
+
+
+      <!-- <button mat-raised-button (click)="AddNewUser()"  style="margin-left: 85%;background-color: purple;  color: white;">New User</button> -->
+
+    </div>
+
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content class="p-0">
+
+    <div style="margin: 5px;" fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}">
+      <div style="align-self: center;" fxFlex="100" fxFlex.gt-sm="67">
+        <a [innerHtml]="FilterString"></a>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="17">
+        <button *ngIf="isdiableeporrt" (click)="reportDownload()" 
+        style="background-color: purple; margin-top: inherit; color: white;float: left;" mat-raised-button color="primary">
+          Export to Excel &nbsp; <mat-icon>
+            cloud_download</mat-icon> </button>
+
+        <button disabled *ngIf="!isdiableeporrt" 
+        style="background-color: purple; margin-top: inherit; color: white;float: left;" mat-raised-button  color="primary">
+          {{pendingcount}}/{{page.totalElements}} &nbsp; <mat-icon>
+            sync</mat-icon> </button>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="15">
+        <button 
+        style="background-color: purple; margin-top: inherit; color: white;float: right;" mat-raised-button  color="primary">Total Rows :
+          {{page.totalElements}}</button>
+      </div>
+    </div>
+
+
+    <ngx-datatable #mydatatable11 class="material ml-0 mr-0 my-data-table" [rows]="items" [columnMode]="'force'" [headerHeight]="50"
+      [footerHeight]="50" [scrollbarH]="true" [limit]="page.size" [count]="page.totalElements" [rowHeight]="35"
+      [externalPaging]="true" (page)="setPage($event)" [offset]="tableOffset">
+      <!--     
+      <ngx-datatable-column name="EMD Balance" [flexGrow]="1" [frozenLeft]="true"> 
+        <ng-template  let-row="row" ngx-datatable-cell-template>
+          <button  (click)="openEmdPopup(row)" style="background-color: purple!important; height: 18px;" class="btn-xs smlbtn"  mat-raised-button color="warn">Add EMD</button>
+        </ng-template>
+      </ngx-datatable-column> -->
+
+
+      <ngx-datatable-column name="Action" [flexGrow]="1" [width]="215"  [frozenLeft]="true">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <button *ngIf="row.is_active" (click)="disableBuyerDiactivate(row)"
+            style=" color: white; background-color: red !important; height: 18px;" class="btn-xs smlbtn"
+            mat-raised-button> Deactivate</button>
+          <button *ngIf="!row.is_active" (click)="disableBuyer(row)"
+            style="color: white; background-color: purple !important;  height: 18px;" class="btn-xs smlbtn"
+            mat-raised-button> Activate</button>
+            <a  (click)="EditBuyerUser(row)" style="padding-left: 6px;" title="Edit User"><i class="fas fa-edit"></i></a>
+            <button (click)="UpdateBuyerUserCategoryLimit(row)"
+            style="color: white; background-color: #10174c  !important;  height: 18px; margin-left: 4px;" class="btn-xs smlbtn"
+            mat-raised-button> Add Limit</button>
+        </ng-template>
+      
+      </ngx-datatable-column>
+
+
+      <ngx-datatable-column [frozenLeft]="true" [width]="100" name="Status" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <!-- {{ row?.is_active }} -->
+          {{row.is_active ? 'Active' : 'Inactive'}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [frozenLeft]="true" [width]="100" name="Category" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{row.category}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [frozenLeft]="true" [width]="125" name="Mobile Number" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.mobile_number }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [frozenLeft]="true" [width]="110" name="EMD Balance" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.emd_balance}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [width]="200" name="Bidder Code" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.bidder_code}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [width]="200" name="Name" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.full_name |titlecase}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [width]="200" name="Registration Date" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.created_at| date :'dd-MM-yyyy hh:mm:ss a' }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="User Name" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.username}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Email Id" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.email_id}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="State" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.state}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="District" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.district}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="City" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.city}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <!-- <ngx-datatable-column [width]="150" name="Adhar No" [flexGrow]="1">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row?.user_documents?.aadhar_no}} 
+            </ng-template>
+          </ngx-datatable-column> -->
+
+
+      <ngx-datatable-column [sortable]="false" [width]="200" name="Address Proof Documnt" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <!-- <a href={{row?.user_documents?.aadhar_url}} download="newfilename" target="_blank"
+            style=" text-decoration-line: underline; color: blue;" routerLinkActive="active"> -->
+            {{ getname(row.user_document_list,'Name')}} 
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [sortable]="false" [width]="200" name="Address Proof Number" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <!-- <a href={{row?.user_documents?.aadhar_url}} download="newfilename" target="_blank"
+            style=" text-decoration-line: underline; color: blue;" routerLinkActive="active"> -->
+            {{ getname(row.user_document_list,'Number')}} 
+
+            
+            
+        </ng-template>
+      </ngx-datatable-column>
+
+      <!-- <ngx-datatable-column [width]="150" name="PAN No" [flexGrow]="1">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row?.user_documents?.pan_no}} 
+            </ng-template>
+          </ngx-datatable-column> -->
+
+
+
+
+      <ngx-datatable-column [sortable]="false" [width]="200" name="PAN No" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <!-- <a href={{row?.user_documents?.pan_url}} download="newfilename" target="_blank"
+            style=" text-decoration-line: underline; color: blue;" routerLinkActive="active">
+            </a> -->
+
+            {{ row?.user_documents?.pan_no}} 
+        </ng-template>
+      </ngx-datatable-column>
+
+
+      <!-- <ngx-datatable-column [width]="150" name="GST No" [flexGrow]="1">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row?.user_documents?.gst_no}} 
+            </ng-template>
+          </ngx-datatable-column> -->
+
+
+
+      <!-- <ngx-datatable-column [sortable]="false" [width]="200" name="GST No" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <a href={{row?.user_documents?.gst_url}} download="newfilename" target="_blank"
+            style=" text-decoration-line: underline; color: blue;" routerLinkActive="active">
+            {{ row?.user_documents?.gst_no}} </a>
+        </ng-template>
+      </ngx-datatable-column> -->
+
+
+
+
+    </ngx-datatable>
+
+
+
+  </mat-card-content>
+</mat-card>
+
+
+
+<app-filter-admin-buyer-users [userTypeInfo]="userTypeInfo" (messageEvent)="receiveMessage($event)"
+  (resetValueEvent)="resetFilter($event)"></app-filter-admin-buyer-users>

@@ -1,0 +1,76 @@
+<mat-card class="p-0">
+  <mat-card-title class="" style="background: #f6f6f6;">
+    <div class="card-title-text">MIS Report</div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <!-- <mat-tab-group #tabRef  style="background: #f6f6f6;"> -->
+  <!-- <mat-tab label="Auctions" style="overflow: none !important;">  -->
+  <mat-card-content class="p-0">
+
+    <form [formGroup]="Form">
+
+
+      <div class="container">
+        <!-- <mat-form-field style="width: 20%"></mat-form-field> -->
+
+        <!-- 
+        <mat-form-field style="width: 40%" class="margin-333" appearance="outline">
+          <mat-label>Bid amount mark up Percentage</mat-label>
+          <input (change)="ChangePercentage($event)" (keypress)="isNumberKey($event)" minlength="1"
+            [formControl]="Form.controls['Percentage']" maxlength="5" type="text" min="1" max="100" matInput
+            placeholder="Bid amount mark up Percentage" />
+        </mat-form-field> -->
+
+
+        <mat-form-field class="filterwidthrow">
+          <mat-label>Type</mat-label>
+          <mat-select [formControl]="Form.controls['type']" (selectionChange)="OnChangeType($event.value)"
+            disableRipple>
+            <mat-option value="ALL" se>ALL</mat-option>
+            <mat-option value="DateWise">Date Wise</mat-option>
+
+
+          </mat-select>
+        </mat-form-field>
+
+
+        <!-- <p style="color: red;" *ngIf="Showerror">Please enter a value between 0.1 and 100</p> -->
+        <br>
+        <div *ngIf="SelectedType == 'DateWise'">
+          <mat-form-field class="filterwidthrow" (click)="picker?.open()">
+            <input readonly matInput [formControl]="Form.controls['from_date']" matInput [matDatepicker]="picker"
+              placeholder="From Date" [max]="maxDate" >
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="filterwidthrow" (click)="picker1?.open()">
+            <input readonly matInput [formControl]="Form.controls['to_date']" matInput [matDatepicker]="picker1"
+              placeholder="To Date" [max]="maxDate" >
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+
+        </div>
+
+
+
+
+
+
+        <!-- <button mat-stroked-button color="primary">View Log</button> -->
+
+
+
+
+      </div>
+
+
+      <div class="container" style="margin: 10px;">
+       
+        <button (click)="Download()" mat-raised-button color="primary">Download Tracker</button>
+        
+      </div>
+
+    </form>
+  </mat-card-content>
+</mat-card>

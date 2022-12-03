@@ -1,0 +1,325 @@
+<!-- <mat-card class="p-0" [@animate]="{value:'*',params:{y:'50px',delay:'300ms'}}">
+  <mat-card-title class="">
+    <div class="card-title-text">
+    
+      <b style="color: purple;">{{ DisplayAuctionname}}</b></div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content class="p-0">
+
+    <div>
+    <mat-card-title class="">
+      <div class="card-title-text">Winner List</div>
+      <mat-divider></mat-divider>
+    </mat-card-title>
+
+     
+ 
+
+</div>
+    <br />
+    <mat-card-title class="">
+      <div class="card-title-text">Bidder List</div>
+      <mat-divider></mat-divider>
+    </mat-card-title>
+
+    
+   
+   
+  </mat-card-content>
+  <div style="text-align-last: center">
+   
+    <a (click)="back()" style="color: blue;">
+      Back
+    </a>
+    <br />
+  </div>
+
+</mat-card> -->
+
+
+
+
+<mat-card class="p-0" [@animate]="{value:'*',params:{y:'50px',delay:'300ms'}}">
+  <mat-card-title class="">
+    <div class="card-title-text">
+
+
+      <!-- <button (click)="back()" style="color: purple !important;  background-color: white;"  
+                class="mr-1 smlbtn"> Back</button> -->
+      {{ DisplayAuctionname}}
+
+      <a title="Back" (click)="back()"
+        style=" float: right !important; vertical-align: top !important; color: purple !important;">
+        <mat-icon>arrow_back</mat-icon>
+      </a>
+
+    </div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <!-- arrow_back -->
+
+
+
+
+  <mat-tab-group [color]="'warn'" (selectedTabChange)="TabChange($event)" [selectedIndex]="selectedTab">
+    <mat-tab style="background-color: violet !important; " label="Bidder List">
+      <mat-card-content>
+
+        <mat-card class="p-0">
+
+          <mat-card-content class="p-0">
+
+
+            <div style="margin: 5px;" fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}">
+              <div style="align-self: center;" fxFlex="100" fxFlex.gt-sm="67">
+                <!-- <a [innerHtml]="FilterString"></a> -->
+              </div>
+              <div fxFlex="100" fxFlex.gt-sm="17">
+                <button *ngIf="isdiableeporrt" (click)="reportDownload();onClick()" 
+                style="background-color: purple; margin-top: inherit; color: white;float: left;" mat-raised-button  color="primary"
+                  color="primary">
+                   Export to Excel&nbsp; <mat-icon>
+                   </mat-icon> </button>
+
+
+                <button disabled *ngIf="!isdiableeporrt" 
+                style="background-color: purple; margin-top: inherit; color: white;float: left;" mat-raised-button  color="warn">
+                  {{this.pendingcount}}/{{this.TotalCount}} &nbsp; <mat-icon>
+                    sync</mat-icon> </button>
+
+                <!-- <a [hidden]="isdiableeporrt" >{{this.pendingcount}}/{{this.ecomcount}}</a> -->
+              </div>
+              <div fxFlex="100" fxFlex.gt-sm="15">
+                <button 
+                style="background-color: purple; margin-top: inherit; color: white;float: right;" mat-raised-button  color="warn">Total Rows :
+                  {{TotalCount}}</button>
+              </div>
+            </div>
+
+            <ngx-datatable #mydatatable4 [rowClass]="getRowClass" class="material ml-0 mr-0" [rows]="items" [columnMode]="'force'"
+              [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true" [limit]="10" [rowHeight]="50">
+              <!--        
+          <ngx-datatable-column  [frozenLeft]="true"  *ngIf="isactionallow"  name="Actions" [flexGrow]="1">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+             
+             <button style="color: white !important;"   mat-raised-button  *ngIf="row.highest_bidder && row.status=='BID RUNNER' " 
+               color="warn" class="mr-1 smlbtn" (click)="BidWinner(row)">Bid Winner</button>
+            </ng-template>
+          </ngx-datatable-column> -->
+
+
+
+              <ngx-datatable-column name="Action" [flexGrow]="1" [frozenLeft]="true">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <button *ngIf="row.is_active" (click)="Remove(row)"
+                    style=" color: white; background-color: red !important; height: 18px;" class="btn-xs smlbtn"
+                    mat-raised-button>Cancel Bid</button>
+                  <a style="text-decoration: line-through;" *ngIf="row.approved_status == 'CANCELLED'">{{
+                    row?.approved_status }}</a>
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column [width]="220" [frozenLeft]="true" name="Name" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.user?.full_name | titlecase}}
+                </ng-template>
+              </ngx-datatable-column>
+
+
+
+
+              <ngx-datatable-column name="Mobile Number" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.user?.mobile_number}}
+                </ng-template>
+              </ngx-datatable-column>
+
+
+              <ngx-datatable-column  [width]="220" name="Email id" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.user?.email_id}}
+                </ng-template>
+              </ngx-datatable-column>
+
+
+               <!-- <ngx-datatable-column  [width]="220" name="Email id" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.ip}}   
+               
+                </ng-template>
+              </ngx-datatable-column>
+
+
+              <ngx-datatable-column  [width]="220" name="Email id" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.location}}
+               
+                </ng-template>
+              </ngx-datatable-column> -->
+
+
+              <ngx-datatable-column name="State(City)" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.user?.state}} ({{row?.user?.city }})
+                </ng-template>
+              </ngx-datatable-column>
+
+
+              <ngx-datatable-column name="Bid Amount" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.bid_amount | currency:"₹"}}
+                </ng-template>
+              </ngx-datatable-column>
+
+
+              <ngx-datatable-column name="Bid Attempt" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <!-- {{ row?.bid_logs.length}} -->
+                  <a style="color: blue; text-decoration: underline;" (click)="ViewLogs(row)">{{
+                    row?.bid_logs.length}}</a>
+                  <!-- <button title="View" mat-icon-button mat-sm-button color="primary" class="mr-1" (click)="ViewLogs(row)">{{ row?.bid_logs.length}}</button> -->
+                </ng-template>
+              </ngx-datatable-column>
+
+
+              
+              <ngx-datatable-column  [width]="220" name="Year of Manufacture" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.inventory?.year_of_manufacture}}
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column  [width]="220" name="Contract no" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.inventory?.contract_no}}
+                </ng-template>
+              </ngx-datatable-column>
+
+
+              <ngx-datatable-column  [width]="220" name="Chassis No" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.inventory?.chassis_no}}
+                </ng-template>
+              </ngx-datatable-column>
+
+              
+
+
+
+
+              <!-- <ngx-datatable-column  *ngIf="row.approved_status == 'CANCELLED'" name="Status" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <a style="text-decoration: line-through;">{{ row?.approved_status }}</a>
+                 
+                </ng-template>
+              </ngx-datatable-column> -->
+
+
+              <ngx-datatable-column name="Status" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <a *ngIf="!row.highest_bidder  && row.approved_status !== 'CANCELLED'">{{ row?.status }}</a>
+                  <a *ngIf="row.highest_bidder && row.approved_status !== 'CANCELLED'">HIGHEST BIDDER</a>
+                  <a style="text-decoration: line-through;" *ngIf="row.approved_status == 'CANCELLED'">{{
+                    row?.approved_status }}</a>
+                </ng-template>
+              </ngx-datatable-column>
+
+
+              <ngx-datatable-column [width]="220" name="Bid Date" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.updated_at | date :'dd-MM-yyyy hh:mm:ss.sss a'}}
+                </ng-template>
+              </ngx-datatable-column>
+
+
+
+
+
+            </ngx-datatable>
+          </mat-card-content>
+        </mat-card>
+      </mat-card-content>
+    </mat-tab>
+
+
+
+    <mat-tab *ngIf="BidType == 'Closed'" style="background-color: violet !important; " label="Winner List">
+      <mat-card-content>
+
+        <mat-card class="p-0">
+
+          <mat-card-content class="p-0">
+            <ngx-datatable class="material ml-0 mr-0" [rows]="items1" [columnMode]="'force'" [headerHeight]="50"
+              [footerHeight]="50" [scrollbarH]="true" [limit]="5" [rowHeight]="50">
+
+
+
+
+              <ngx-datatable-column name="Name" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.user?.full_name}}
+                </ng-template>
+              </ngx-datatable-column>
+
+              <!-- <ngx-datatable-column name="Sr No.">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row">
+                {{rowIndex+1}}
+              </ng-template>
+            </ngx-datatable-column> -->
+
+
+              <ngx-datatable-column name="Mobile Number" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.user?.mobile_number}}
+                </ng-template>
+              </ngx-datatable-column>
+
+
+
+              <ngx-datatable-column name="State(City)" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.user?.state}} ({{row?.user?.city }})
+                </ng-template>
+              </ngx-datatable-column>
+
+
+              <ngx-datatable-column name="Bid Amount" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.bid_amount | currency:"₹"}}
+                </ng-template>
+              </ngx-datatable-column>
+
+
+              <ngx-datatable-column name="Bid Attempt" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.bid_logs.length}}
+                </ng-template>
+              </ngx-datatable-column>
+
+
+
+
+
+
+              <ngx-datatable-column name="Status" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.status }}
+                </ng-template>
+              </ngx-datatable-column>
+
+
+              <ngx-datatable-column [width]="200" name="Bid Date" [flexGrow]="1">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.updated_at | date :'dd-MM-yyyy hh:mm:ss.sss a'}}
+                </ng-template>
+              </ngx-datatable-column>
+
+
+            </ngx-datatable>
+
+          </mat-card-content>
+        </mat-card>
+      </mat-card-content>
+    </mat-tab>
+  </mat-tab-group>

@@ -1,0 +1,41 @@
+
+ 
+  @media screen and (min-width: 769px) and (max-width: 1160px) {
+    .datatable-body {
+      display: flex;
+      flex-wrap: wrap;
+      overflow-x: scroll;
+      &-cell {
+        flex: 0 0 20%;
+        max-width: 20%;
+        width: auto !important;
+        min-width: 20% !important;
+        white-space: normal !important;
+        font-size: 12px;
+        &.is_hidden {
+          display: none;
+        }
+      }
+    }
+
+    .datatable-scroll,
+    .datatable-row-wrapper,
+    .datatable-body-row,
+    .datatable-header-inner {
+      width: 100% !important;
+    }
+
+    // All column will same width
+    .datatable-header {
+      &-cell {
+        flex: 0 0 20%;
+        max-width: 20%;
+        width: auto !important;
+        min-width: 20% !important;
+        font-size: 12px;
+        &.should_be_hidden {
+          display: none;
+        }
+      }
+    }
+  }

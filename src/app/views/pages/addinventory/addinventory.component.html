@@ -1,0 +1,870 @@
+<mat-card class="p-0">
+  <mat-card-title class="">
+    <div class="card-title-text">
+      <mat-icon [routerLink]="'/pages/InventoryList'" class="cursor">arrow_back</mat-icon> &nbsp;&nbsp;&nbsp;Inventory Master
+    </div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="InventoryFormNew">
+      <div fxLayout="row wrap">
+        <mat-horizontal-stepper linear #stepper [linear]="true">
+          <mat-step>
+            <ng-template matStepLabel><button class="bg" mat-flat-button color="accent">Other Details</button>
+            </ng-template>
+            <div style="margin-top: 24px;" fxLayout="row wrap">
+
+
+
+              <mat-form-field class="filterwidth" fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <input [formControl]="InventoryFormNew.controls['Chassiedescription']" required type="text"
+                  placeholder="Chassis Description" aria-label="Number" matInput [matAutocomplete]="auto1">
+                <mat-autocomplete (optionSelected)="OnchangDescription($event)" #auto1="matAutocomplete">
+                  <mat-option *ngFor="let option of TempChassidescription" [value]="option.Display">
+                    {{option.Display}}
+
+                  </mat-option>
+                </mat-autocomplete>
+
+              </mat-form-field>
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <mat-select [formControl]="InventoryFormNew.controls['ppt_id']" matinput required
+                      [disableOptionCentering]="true" placeholder="Vehicle Category">
+                      <mat-option Selected *ngFor="let PPT of PPTDATA" [value]="PPT.id"> {{PPT.ppt}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+
+
+
+
+
+              <!-- 
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input matInput AlphaNumbericDirective placeholder="Title"
+                      [formControl]="InventoryFormNew.controls['inventory_title']" maxlength="25" required>
+                  </mat-form-field>
+                </div>
+              </div> -->
+
+              <!-- <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input matInput AlphaNumbericDirective placeholder="Place Of Origin"
+                      [formControl]="InventoryFormNew.controls['place_of_origin']" maxlength="25" required>
+                  </mat-form-field>
+                </div>
+              </div> -->
+
+
+
+
+              <!-- <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input matInput AlphaNumbericDirective placeholder="Mobile Number"
+                      [formControl]="InventoryFormNew.controls['mobile_number']" maxlength="25">
+                  </mat-form-field>
+                </div>
+              </div> -->
+
+
+
+
+              <!-- <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <mat-select (selectionChange)="Onchangeyard($event)"
+                      [formControl]="InventoryFormNew.controls['yard_id']" matInput required
+                      [disableOptionCentering]="true" placeholder="Yard">
+                      <mat-option *ngFor="let Yard of YardData" [value]="Yard.id"> {{Yard.yard_state}} -
+                        {{Yard.yard_code}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div> -->
+
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input required type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" maxlength="25"
+                      matInput placeholder="Contract Number" [formControl]="InventoryFormNew.controls['contract_no']">
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+
+              <mat-form-field class="filterwidth" fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <input required type="text" placeholder="Yard" aria-label="Number" matInput
+                  [formControl]="InventoryFormNew.controls['YardDetails']" [matAutocomplete]="auto">
+                <mat-autocomplete (optionSelected)="Onchangeyard($event)" #auto="matAutocomplete">
+                  <mat-option *ngFor="let option of tempdata " [value]="option.Dsiplay">
+                    {{option.Dsiplay}}
+                  </mat-option>
+                </mat-autocomplete>
+
+              </mat-form-field>
+
+
+
+              <!-- <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input readonly required type="text" matInput placeholder="Yard Details"
+                      [formControl]="InventoryFormNew.controls['YardDetails']">
+                  </mat-form-field>
+                </div>
+              </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input readonly matInput AlphaNumbericDirective placeholder="Evaluation agency"
+                      [formControl]="InventoryFormNew.controls['second_online_agency']" maxlength="25">
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input readonly matInput AlphaNumbericDirective placeholder="Yard State"
+                      [formControl]="InventoryFormNew.controls['yard_state']" maxlength="25">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <!-- <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input matInput AlphaNumbericDirective placeholder="Yard Status"
+                      [formControl]="InventoryFormNew.controls['yard_state']" maxlength="25" >
+                  </mat-form-field>
+                </div>
+              </div> -->
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input readonly matInput AlphaNumbericDirective placeholder="Yard Region"
+                      [formControl]="InventoryFormNew.controls['yard_region']" maxlength="25">
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input readonly matInput AlphaNumbericDirective placeholder="Yard City"
+                      [formControl]="InventoryFormNew.controls['yard_city']" maxlength="25">
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input  matInput AlphaNumbericDirective placeholder="Remarks"
+                      [formControl]="InventoryFormNew.controls['remarks']" maxlength="100">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input required type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" maxlength="5"
+                      matInput placeholder="BP Code" [formControl]="InventoryFormNew.controls['bp_code']">
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+            <div>
+
+            
+              <a style="color: red;" *ngIf="EvaluatorRemark" [innerHtml]="EvaluatorRemark"></a>
+
+              <br>
+              <button (click)="goForward(stepper,'1')" class="bg" mat-raised-button color="primary" type="button">
+                Next
+              </button>
+            
+            </div>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel><button class="bg" mat-flat-button color="accent">Vehicle Details</button>
+            </ng-template>
+            <div style="margin-top: 24px;" fxLayout="row wrap">
+
+
+              <!-- 
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">';'
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input matInput AlphaNumbericDirective placeholder="PPt"
+                      [formControl]="InventoryFormNew.controls['ppt']" maxlength="25">
+                  </mat-form-field>
+                </div>
+              </div> -->
+
+
+
+              <!-- <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+
+
+                    <mat-select (selectionChange)="OnchangDescription($event.value)" matinput required
+                      [formControl]="InventoryFormNew.controls['chassis_description_id']"
+                      [disableOptionCentering]="true" placeholder="Chassis Description">
+                      <mat-option *ngFor="let Description of Chasiedescription" [value]="Description">
+                        {{Description.description}} </mat-option>
+                    </mat-select>
+
+                  </mat-form-field>
+                </div>
+              </div> -->
+
+
+
+
+
+
+
+
+
+              <div *ngIf="SubpartytypeId !=3" fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input onkeyup="this.value = this.value.toUpperCase();" matInput AlphaNumbericDirective
+                      placeholder="Chassis No" [formControl]="InventoryFormNew.controls['chassis_no']" maxlength="25"
+                      required>
+                  </mat-form-field>
+                </div>
+              </div>
+
+             
+
+              <div *ngIf="SubpartytypeId !=3" fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input style="text-transform:uppercase" matInput AlphaNumbericDirective placeholder="Engine No "
+                      [formControl]="InventoryFormNew.controls['engine_no']" maxlength="25" required>
+                  </mat-form-field>
+                </div>
+              </div>
+
+             
+
+
+
+              <div *ngIf="SubpartytypeId !=3" fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input style="text-transform:uppercase" matInput AlphaNumbericDirective
+                      placeholder="Registration Number" [formControl]="InventoryFormNew.controls['registration_number']"
+                      maxlength="12">
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+             
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <mat-select [disableOptionCentering]="true"
+                      (selectionChange)="OnchangeVehicleregister($event.value)" placeholder="Vehicle Registered"
+                      [formControl]="InventoryFormNew.controls['vehicle_registered']">
+                      <mat-option value="Yes">Yes</mat-option>
+                      <mat-option value="no">No</mat-option>
+
+
+
+
+
+
+
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <mat-select [disableOptionCentering]="true" placeholder="RC Available Status"
+                      [formControl]="InventoryFormNew.controls['rc_available_status']">
+                      <!-- <mat-option  value="Yes">Yes</mat-option>
+                      <mat-option value="no">No</mat-option> -->
+
+                      <mat-option *ngFor="let Option of RCStatus" value={{Option}}>{{Option}}</mat-option>
+
+
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+
+
+
+
+
+
+
+              <!-- <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input matInput AlphaNumbericDirective placeholder="Engine No "
+                      [formControl]="InventoryFormNew.controls['engine_no']" maxlength="25">
+                  </mat-form-field>
+                </div>
+              </div> -->
+
+
+
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <!-- <input matInput   AlphaNumbericDirective placeholder="Year Of Manufacture"
+                      [formControl]="InventoryFormNew.controls['year_of_manufacture']" maxlength="25" required>
+                  </mat-form-field> -->
+
+                    <mat-select [formControl]="InventoryFormNew.controls['year_of_manufacture']" matInput required
+                      [disableOptionCentering]="true" placeholder="Manufacturing Year">
+                      <mat-option *ngFor="let year of year" [value]="year"> {{year}}
+                      </mat-option>
+                    </mat-select>
+
+
+                  </mat-form-field>
+
+
+                </div>
+              </div>
+
+              <!-- 
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" maxlength="3" matInput
+                      AlphaNumbericDirective placeholder="Days in Stock"
+                      [formControl]="InventoryFormNew.controls['days_in_stock']">
+                  </mat-form-field>
+                </div>
+              </div> -->
+
+
+
+
+
+
+
+
+
+
+
+              <!-- <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <mat-select matInput [disableOptionCentering]="true" placeholder="Vehicle Type"
+                      [formControl]="InventoryFormNew.controls['vehicle_type']">
+                      <mat-option value="CARS">CARS</mat-option>
+                     
+                      <mat-option value="LCV">LCV</mat-option>
+                      <mat-option value="ICV">ICV</mat-option>
+                      <mat-option value="MHCV">MHCV</mat-option>
+                      <mat-option value="ACE">ACE</mat-option>
+
+
+                      <mat-option value="INTRA">INTRA</mat-option>
+                      <mat-option value="Magic">Magic</mat-option>
+                      <mat-option value="UV">UV</mat-option>
+
+
+                      <mat-option value="CEQ">CEQ</mat-option>
+                      <mat-option value="NON TML">NON TML</mat-option>
+
+
+
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div> -->
+
+
+
+
+
+
+
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width" (click)="picker?.open()">
+                    <input [max]="minDate" readonly matInput [formControl]="InventoryFormNew.controls['reposs_date']"
+                      matInput [matDatepicker]="picker" placeholder="Reposs Date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+
+
+
+                  </mat-form-field>
+
+
+                </div>
+              </div>
+
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <mat-select matInput required [disableOptionCentering]="true" placeholder="Brand type"
+                      [formControl]="InventoryFormNew.controls['brand_type']">
+                      <mat-option value="TATA">TATA</mat-option>
+                      <mat-option value="NON TATA">NON TATA</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <mat-select matInput [disableOptionCentering]="true" placeholder="Body type"
+                      [formControl]="InventoryFormNew.controls['body_type']">
+                      <mat-option value="Open Body/Good Body">Open Body/Good Body</mat-option>
+                      <mat-option value="Tanker">Tanker</mat-option>
+                      <mat-option value="Containe">Containe</mat-option>
+                      <mat-option value="Scooter Carrier">Scooter Carrier</mat-option>
+                      <mat-option value="Car Carriers">Car Carriers</mat-option>
+
+
+                      <mat-option value="Trailer">Trailer</mat-option>
+                      <mat-option value="Tipper">Tipper</mat-option>
+                      <mat-option value="Tipper Trailer">Tipper Trailer</mat-option>
+
+
+
+
+                      <mat-option value="Bulkers">Bulkers</mat-option>
+                      <mat-option value="Refrigerated Van">Refrigerated Van</mat-option>
+                      <mat-option value="Non A/c Bus- Sleeper/Sitting">Non A/c Bus- Sleeper/Sitting</mat-option>
+
+                      <mat-option value="A/c Bus- Sleeper/Sitting">A/c Bus- Sleeper/Sitting</mat-option>
+                      <mat-option value="School Bus">School Bus</mat-option>
+
+                      <mat-option value="City Route Bus.">City Route Bus.</mat-option>
+
+
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+
+              <div *ngIf="SubpartytypeId !== 3" fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" maxlength="7" matInput
+                      AlphaNumbericDirective placeholder="Average Sale Price"
+                      [formControl]="InventoryFormNew.controls['avg_sale_price']">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" maxlength="7" matInput required
+                      AlphaNumbericDirective placeholder="Chassis Invoice Value"
+                      [formControl]="InventoryFormNew.controls['chassis_invoice_value']">
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" maxlength="7" matInput
+                      AlphaNumbericDirective placeholder="Body Invoice Value"
+                      [formControl]="InventoryFormNew.controls['body_invoice_value']">
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width" (click)="picker4?.open()">
+                    <input [min]="minDate" readonly matInput [formControl]="InventoryFormNew.controls['tax_paid_validity']"
+                      matInput [matDatepicker]="picker4" placeholder=" Tax paid validity Date">
+                    <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                    <mat-datepicker #picker4></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width" (click)="picker2?.open()">
+                    <input [min]="minDate" readonly matInput [formControl]="InventoryFormNew.controls['insurance_validity']"
+                      matInput [matDatepicker]="picker2" placeholder="Insurance validity Date">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width" (click)="picker3?.open()">
+                    <input [min]="minDate" readonly matInput [formControl]="InventoryFormNew.controls['fitness_validity']"
+                      matInput [matDatepicker]="picker3" placeholder="Fitness validity Date">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+
+
+
+
+
+            </div>
+            <div fxLayout="row">
+              <a style="color: red;" *ngIf="EvaluatorRemark" [innerHtml]="EvaluatorRemark"></a>
+
+              <br>
+
+              <button mat-raised-button color="accents" (click)="goBack(stepper)">
+                Back
+              </button>
+              <span fxFlex="8px"></span>
+              <button (click)="goForward(stepper,'2')" class="bg" mat-raised-button color="primary" type="button">
+                Next
+              </button>
+            </div>
+          </mat-step>
+
+          <mat-step>
+            <ng-template matStepLabel><button class="bg" mat-flat-button color="accent">Gallery</button></ng-template>
+            <div fxLayout="row wrap">
+            </div>
+            <!-- <div>
+                <img *ngFor="let url of urls" [src]="url" class="rounded mb-3" width="180">
+              </div> -->
+
+
+
+
+
+            <!-- <div fxLayout="row wrap"  formArrayName="InventoryUploadData">
+                <div fxFlex="100" fxFlex.gt-xs="25" class="pr-1" ></div>
+                <table class="default-table mat-box-shadow mb-24" style="width: 100%" id=""  *ngIf="urls.length>0" > 
+                    <thead>
+                    <tr>
+                        <th width="30%">Image</th>
+                        <th style="display: none;">File Name</th>
+                        <th>Image Positon</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr  *ngFor="let group of getmultipleControl.controls;let i=index;" [formGroupName]="i">
+                        <td>   <img  src="{{group.get('FileImageSrc').value }}" class="rounded mb-3" width="50px" height="50px"></td>
+                        <td style="display: none;"> 
+                            <input type="hidden"  formControlName="FileName" value="{{group.get('FileName').value }}"/>
+                        </td>
+                        <td> 
+                            <mat-select [disableOptionCentering]="true" matinput required formControlName="ImagePositionType"  placeholder="Image Position" width="80px">
+                                <mat-option value="cover_image">COVER IMAGE</mat-option>
+                                <mat-option value="front_left_tyre">LHS</mat-option>
+                                <mat-option value="rhs">RHS</mat-option>
+                                <mat-option value="front">FRONT</mat-option>
+                                <mat-option value="back">BACK</mat-option>
+                                <mat-option value="inside_cabin">INSIDE CABIN</mat-option>
+                                <mat-option value="all_tyre">ALL TYRE</mat-option>
+                                 </mat-select>
+                        </td>
+                                 
+                        <td nowrap>
+                            <button 
+                            mat-raised-button
+                            color="warn"
+                            class="mx-4"
+                            (click)="onItemDeleted(n)">Remove</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                   
+                </table>
+             
+
+               
+
+            </div> -->
+
+            <div style="margin-top: 24px;" fxLayout="row wrap">
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width" (click)="picker1?.open()">
+                    <input [max]="minDate" readonly matInput [formControl]="InventoryFormNew.controls['evaluator_date']"
+                      matInput [matDatepicker]="picker1" placeholder="Evaluator Date">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+
+
+
+                  </mat-form-field>
+
+
+                </div>
+              </div>
+
+
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" maxlength="10" matInput
+                      AlphaNumbericDirective placeholder="Amount"
+                      [formControl]="InventoryFormNew.controls['bid_start_price']">
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input type="text" style="text-transform:uppercase" matInput maxlength="25" matInput
+                      AlphaNumbericDirective placeholder="Evaluator Chassis Number"
+                      [formControl]="InventoryFormNew.controls['evaluator_chassis_no']">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input type="text" style="text-transform:uppercase" matInput maxlength="25" AlphaNumbericDirective
+                      placeholder="Evaluator Engine Number"
+                      [formControl]="InventoryFormNew.controls['evaluator_engine_no']">
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input type="text" style="text-transform:uppercase" matInput maxlength="25" AlphaNumbericDirective
+                      placeholder="Evaluator Registration Number"
+                      [formControl]="InventoryFormNew.controls['evaluator_registration_number']">
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+            </div>
+
+            <div fxLayout="row wrap">
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <div class="mb-1">
+                    <p style="color: rgb(169, 169, 169);"> <label *ngIf="SubpartytypeId==3" class="control-label"
+                        style="color: red;">*</label>Evaluation Report <a style="color: red;">(.pdf format)</a> </p>
+
+                    <!-- <input type="file"    (change)="onSelectDocument($event)"  required/> -->
+                    <label>
+                      <input type="file" (change)="onSelectDocument($event)" style="display:none" />
+                      <a mat-raised-button color="primary" class="files">
+                        <mat-icon>file_upload</mat-icon>
+                      </a>
+                    </label>
+
+                    &nbsp;&nbsp;
+                    <a *ngIf="DocumentFile  && InventoryID" href="{{DocumentFile}}" target="_blank"
+                      style=" text-decoration-line: underline; color: blue;" routerLinkActive="active"> view </a>
+                    <label style="color: rgb(169, 169, 169);"> {{ AttachementFile }} </label>
+                  </div>
+                </div>
+              </div>
+
+
+              <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                <div class="pb-1">
+                  <div class="mb-1">
+                    <p style="color: rgb(169, 169, 169);"> <label *ngIf="SubpartytypeId==3" class="control-label"
+                        style="color: red;">*</label>Vehicle Images</p>
+
+                    <!-- <input type="file"    (change)="onSelectDocument($event)"  required/> -->
+                    <label>
+                      <input type="file" multiple (change)="SelectImageFiles($event)" style="display:none" />
+                      <a mat-raised-button color="primary" class="files">
+                        <mat-icon>file_upload</mat-icon>
+                      </a>
+                    </label>
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div>
+              <label (change)="SelectImageFiles($event)" class="custom-file-upload">
+                <input multiple type="file"/>
+                Images
+            </label>
+            </div> -->
+            <div fxLayout="row wrap" formArrayName="InventoryUploadData">
+              <div fxFlex="100" fxFlex.gt-xs="30" class="pr-1" *ngFor="
+                  let group of getmultipleControl.controls;
+                  let i = index
+                " [formGroupName]="i">
+                <div class="pb-1">
+                  <!-- <img  src="{{group.get('FileImageSrc').value }}" class="rounded mb-3" width="150px" height="150px"> -->
+                  <div class="img-container">
+                    <img class="img-to-fit" src="{{ group.get('FileImageSrc').value }}" alt="" />
+                    <input class="delete" type="button" (click)="removeGroup(i,group)" value="X" />
+                  </div>
+
+                  <!-- <div>   {{group.get('ImageType').value}}</div> -->
+
+
+
+                  <input type="hidden" formControlName="FileName" value="{{ group.get('FileName').value }}" />
+                  <mat-select [disabled]="group.get('ImageType').value =='OLD' " [disableOptionCentering]="true"
+                    formControlName="ImagePositionType" placeholder="Image Position" width="80px">
+                    <mat-option value="cover_image">Cover image</mat-option>
+
+                    <mat-option value="front">Front</mat-option>
+                    <mat-option value="back">Back</mat-option>
+                    <mat-option value="lhs">LHS</mat-option>
+                    <mat-option value="rhs">RHS</mat-option>
+                    <mat-option value="inside_cabin">Cabin</mat-option>
+                    <mat-option value="speedometer">Speedometer</mat-option>
+                    <mat-option value="chassis">Chassis</mat-option>
+                    <mat-option value="front_right_tyre">Front right tyre</mat-option>
+                    <mat-option value="front_left_tyre">Front left tyre</mat-option>
+                    <mat-option value="rear_right_tyre">Rear right tyre</mat-option>
+                    <mat-option value="rear_left_tyre">Rear left tyre</mat-option>
+                    <mat-option value="spare">Spare</mat-option>
+
+
+                  </mat-select>
+
+
+                </div>
+              </div>
+
+            </div>
+
+            <small style="color: red; font-size: inherit;">
+              <b>**Instruction:</b>
+              Image size should be 500*400 and file size should be less than 5 MB and only jpeg,png and jpg file are
+              allowed (Inventory cover image is complusory) </small>
+
+
+            <br>
+
+            <small *ngIf="msgdisplay" style="color: purple; font-size: inherit;">
+              <b>Note:</b>
+              Approved status vehicle can not be edited </small>
+
+
+
+
+            <div fxLayout="row">
+              <button (click)="goBack(stepper)" mat-raised-button color="accents">
+                Back
+              </button>
+              <span fxFlex="8px"></span>
+              <button *ngIf="!isedit  && CheckPermission('add')" (click)="Save()" class="bg" mat-raised-button
+                color="primary">
+                Submit
+              </button>
+
+              <button *ngIf="isedit   && CheckPermission('update')  && !msgdisplay " (click)="Update()" class="bg"
+                mat-raised-button color="primary">
+                Update
+              </button>
+
+
+            </div>
+          </mat-step>
+        </mat-horizontal-stepper>
+      </div>
+    </form>
+  </mat-card-content>

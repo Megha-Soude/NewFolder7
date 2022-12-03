@@ -1,0 +1,98 @@
+  
+.ngx-datatable.material {
+    .datatable-header {
+      .datatable-header-cell {
+        // your styles here
+       //font-size: 10in;
+       // font-weight: 700;
+        background-color:#999999 !important;
+        color:white;
+        font-size: inherit;
+        font-weight: bold;
+        text-align: center;
+       // text-decoration-color: whitesmoke;
+  
+      }
+    }
+  }
+  
+  .datatable-body-cell-label
+  {
+    text-align: center !important;
+  }
+  
+  .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell {
+   
+    text-align: center !important;
+  }
+  
+  
+    ::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
+      min-width: 0!important;
+      padding: 3px!important;
+      margin: 3px!important;
+     }
+  
+    // .datatable-checkbox input[type='checkbox']:after
+    // {
+      
+    //   border: 2px solid #615246;
+    // }
+    // .datatable-checkbox input[type='checkbox']:before 
+    // {
+    //   border: 2px solid #615246;
+    // }
+  
+    .textFont{
+  
+      font-weight: bolder;
+      color: #0e1068 !important;
+    }
+    
+  
+    
+  
+    .mat-tab-label{
+      background: #f2f2f2 !important ;
+      color:blue !important;
+    }
+    /* focus style */
+    .mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus, .mat-tab-group.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus, .mat-tab-nav-bar.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus, .mat-tab-nav-bar.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus{
+      background: #0e1068 !important; 
+    }
+    /* ink bar style */
+   
+    .mat-ink-bar {
+      background-color: #0e1068 !important ;
+  }
+  
+  
+  
+  //For order Detail popup
+  
+  .my-class .mat-dialog-container{
+    height: 700px;
+    width: 100%;
+    border-radius: 10px;
+   // margin-left: 100px;
+   // margin-top: 80px;
+   // margin-bottom: 200px;
+    
+   // background: lightcyan;
+  //  color: #039be5;
+  }
+  
+  .mat-expansion-panel-body {
+    //padding: 0 24px 16px;
+    width: 1100px !important;
+   // overflow: scroll;
+    
+  }
+  
+  
+  // .mat-expansion-panel-body {
+  //   padding: 0;
+  // }
+  
+   
+    

@@ -1,0 +1,37 @@
+
+button.close {
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: 0;
+    
+}
+.close {
+    float: right;
+    font-size: 21px;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .2;
+}
+
+.cdk-overlay-pane{
+        max-width: 50vw;
+}
+
+.prodBox .large img{width: auto; left:50%; transform:translateX(-50%); position: relative;}
+
+
+
+#overlay {
+  width: 600px;
+  height: 500px;
+  display: -ms-grid;
+  background-repeat: no-repeat;
+  -ms-grid-columns: 200px 30px auto;
+  grid-template-columns: 480px auto;
+  position: relative;
+  
+  }

@@ -1,0 +1,77 @@
+
+
+<h1 matDialogTitle>{{Title}}  </h1>
+
+
+
+
+
+
+
+<mat-card style="overflow: auto !important;" class="p-0" [@animate]="{value:'*',params:{y:'50px',delay:'300ms'}}">
+ <mat-card-content  style="overflow: auto !important; min-width: 100% !important" class="p-0">
+
+  <ngx-datatable #ngxDatatable [limit]="5" style="min-width: 100% !important"  class="material ml-0 mr-0" [rows]="rows" [columnMode]="'force'" [headerHeight]="40"
+    [scrollbarH]="true"   [footerHeight]="40" [rowHeight]="35"
+     >
+
+  
+
+
+
+
+
+
+
+
+     <ngx-datatable-column name="Sr No.">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row">
+        {{rowIndex+1}}
+      </ng-template>
+    </ngx-datatable-column>
+
+ 
+
+
+    <ngx-datatable-column [width]="80" name="Value">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+
+        {{ row?.env_value  | number  }}
+
+      </ng-template>
+    </ngx-datatable-column>
+
+
+
+
+
+    <ngx-datatable-column [width]="180" name="Created Date">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+
+        {{ row?.created_at  | date :'dd-MM-yyyy hh:mm:ss a' }}
+       
+      </ng-template>
+    </ngx-datatable-column>
+
+
+  
+
+
+
+
+
+
+
+
+
+  </ngx-datatable>
+
+ 
+  <button style="margin-bottom: 9px;
+   float: right;
+   margin-right: 9px;" mat-raised-button mat-dialog-close class="closeDel" color="primary">OK</button>
+
+ </mat-card-content></mat-card>
+ 
+  
+ 

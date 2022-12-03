@@ -1,0 +1,61 @@
+<button style="float: right" mat-icon-button mat-dialog-close class="closeDel">
+  <mat-icon>close</mat-icon>
+</button>
+<p>
+  Bid Logs
+</p>
+
+ 
+  
+
+
+
+
+<mat-card  >
+  <mat-card-content >
+
+ 
+    
+
+  <ngx-datatable [limit]="10" class='bootstrap material'
+  [rows]="rows" [columnMode]="'flex'" [headerHeight]="40"
+  [scrollbarH]="true"   [footerHeight]="40" [rowHeight]="35"
+   >
+
+
+
+
+   <ngx-datatable-column name="Sr No.">
+    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row">
+      {{rowIndex+1}}
+    </ng-template>
+  </ngx-datatable-column>
+
+<ngx-datatable-column [sortable]="false" name="Bid Amount" [flexGrow]="1">
+<ng-template let-row="row" ngx-datatable-cell-template>
+  {{ row?.bid_amount }}
+</ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column [sortable]="false" name="Bid Date" [flexGrow]="1">
+<ng-template let-row="row" ngx-datatable-cell-template>
+  {{ row?.created_at| date :'dd-MM-yyyy hh:mm:ss a' }}
+</ng-template>
+</ngx-datatable-column>
+
+
+
+
+
+
+
+
+</ngx-datatable>
+
+
+   
+
+
+  
+  </mat-card-content></mat-card>
+
+ 

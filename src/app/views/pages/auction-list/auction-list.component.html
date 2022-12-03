@@ -1,0 +1,169 @@
+
+
+<mat-card >
+
+
+  <mat-card-title class="">
+    <div class="textFont card-title-text">Auction List  <button mat-raised-button (click)="AddAuctionClick()"  style="margin-left: 75%;background-color: purple;  color: white;">Add Auction</button>
+
+
+      
+
+    </div>
+
+   
+
+  </mat-card-title>
+  <mat-card-content>
+
+    <mat-card class="p-0" >
+
+      <mat-card-content class="p-0">
+
+    
+        <!-- <div style="margin: 5px;" fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}">
+          <div style="align-self: center;" fxFlex="100" fxFlex.gt-sm="67">
+            <a [innerHtml]="FilterString"></a>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="17">
+            <button *ngIf="isdiableeporrt"  (click)="ReportExport()" style="float: left;" mat-stroked-button color="primary">
+              Export to Excel &nbsp; <mat-icon>
+                cloud_download</mat-icon> </button>
+
+
+                <button disabled *ngIf="!isdiableeporrt"  style="float: left; color: red;" mat-stroked-button color="warn">
+                  {{this.pendingcount}}/{{this.ecomcount}} &nbsp; <mat-icon>
+                    sync</mat-icon> </button>
+
+               
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="15">
+            <button style="float: right;" mat-stroked-button color="primary">Total Rows :
+              {{ecomcount}}</button>
+          </div>
+        </div> -->
+       
+
+        <ngx-datatable [rowClass]="getRowClass"  (page)="setPage($event)" class="material ml-0 mr-0" [rows]="items" [columnMode]="'force'" [headerHeight]="40"
+        [footerHeight]="40" [scrollbarH]="true" [limit]="page.size" [count]="page.totalElements" [rowHeight]="35"
+        [externalPaging]="true">
+  
+  
+  
+  
+
+        <ngx-datatable-column  [frozenLeft]="true" name="Actions" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+           
+            <button  style="background-color: green !important;;" class="btn-xs smlbtn" *ngIf="row?.auction_status === 'DISAPPROVED' || row?.auction_status === 'PENDING'" mat-raised-button (click)="StatusUpdate(row,'APPROVED')"  color="primary">Approve</button>
+ 
+            <button style="background-color: #f44336!important" class="btn-xs smlbtn" *ngIf="row?.auction_status === 'APPROVED' "  (click)="StatusUpdate(row,'DISAPPROVED')" mat-raised-button color="warn">Disapprove</button>
+
+
+          </ng-template>
+        </ngx-datatable-column>
+
+
+  
+        <ngx-datatable-column  [frozenLeft]="true" [sortable]="false" name="Image" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <!-- {{ row?.image_url}} -->
+            <img src={{row?.cover_image}} alt="" width="50px" height="30px">
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column  [sortable]="false" [frozenLeft]="true" [width]="200" name="Auction Code" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <!-- {{ row?.account_id   }} -->
+            <a  (click)="ViewDetail(row)"
+              style=" text-decoration-line: underline; color: blue;" routerLinkActive="active">
+              {{ row?.auction_code }}</a>
+
+           
+
+
+          </ng-template>
+        </ngx-datatable-column>
+  
+  
+        <ngx-datatable-column  [frozenLeft]="true" [sortable]="false" [width]=200 name="Auction Title">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.auction_title}}
+          </ng-template>
+        </ngx-datatable-column>
+  
+  
+      
+  
+  
+        <ngx-datatable-column [sortable]="false" [width]=200 name="Start Date" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.start_at  | date :'dd-MM-yyyy hh:mm:ss a' }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column [sortable]="false" [width]=200 name="End Date" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.end_at | date :'dd-MM-yyyy hh:mm:ss a' }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column [sortable]="false" name="Total Bids" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.total_bids }}
+          </ng-template>
+        </ngx-datatable-column>
+        
+
+        <ngx-datatable-column [sortable]="false" name="Total inventory" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.inventory_count}}
+          </ng-template>
+        </ngx-datatable-column>
+       
+        
+
+       
+
+
+
+        <ngx-datatable-column [sortable]="false"  name="Auction Status" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.open_auction_type | titlecase }}
+          </ng-template>
+        </ngx-datatable-column>
+        
+
+        <ngx-datatable-column   [sortable]="false"  name="Approval Status" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.auction_status | titlecase  }}
+          </ng-template>
+        </ngx-datatable-column>
+<!-- 
+        <ngx-datatable-column  name="Actions" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+           
+            <button  style="background-color: green !important;;" class="btn-xs smlbtn" *ngIf="row?.auction_status === 'DISAPPROVED' || row?.auction_status === 'PENDING'" mat-raised-button (click)="StatusUpdate(row,'APPROVED')"  color="primary">Approve</button>
+ 
+            <button style="background-color: #f44336!important" class="btn-xs smlbtn" *ngIf="row?.auction_status === 'APPROVED' "  (click)="StatusUpdate(row,'DISAPPROVED')" mat-raised-button color="warn">Disapprove</button>
+
+
+          </ng-template>
+        </ngx-datatable-column> -->
+       
+
+      </ngx-datatable>
+
+     
+
+
+
+      </mat-card-content>
+    </mat-card>
+
+
+
+
+  </mat-card-content>
+  
+
+
+ 

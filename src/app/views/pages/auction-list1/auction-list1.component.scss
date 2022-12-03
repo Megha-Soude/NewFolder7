@@ -1,0 +1,128 @@
+.mat-raised-button.mat-accent{
+  background-color: #3792e5;
+  color: #fff;
+}
+.Data{
+  text-align: center;
+  width: 100%;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+.files{
+  background-color: #3792e5 !important;
+}
+
+.imgBox.img-to-fit {
+  flex: 1;
+  height: 100%;
+}
+
+.img-container {
+  // width: 300px;
+  // height: 200px;
+  width: 420px;
+  height: 250px;
+  // border: 2px solid red;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  
+}
+.img-container .img-to-fit {
+  flex: 1;
+  height: 100%;
+}
+
+
+
+// 
+//   .egret-navy .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+//     background-color: rgb(3 6 35 / 54%) !important;
+// }
+::ng-deep.egret-navy .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+background-color: #10174c !important;
+}
+
+::ng-deep.egret-navy .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+background-color: #8C8C8C		!important;
+}
+::ng-deep.egret-navy .mat-slide-toggle-thumb {
+background-color: #10174c !important;
+}
+
+.toshow{
+font-size: larger;
+font-weight: 700;
+color: #10174c;
+margin:0px;
+text-transform: capitalize;
+}
+.divdisable { 
+pointer-events: none; opacity: 1.2;
+color: #8C8C8C;
+} 
+
+.mat-card-title {
+display: block;
+margin-bottom: 0px !important;
+background: #f6f6f6;
+}
+
+.imgblur{
+filter: blur(5px);
+-webkit-filter: blur(5px);
+position: absolute;
+}
+
+.soldout_image
+{
+width: 27%;
+position: absolute;
+z-index: 1;
+margin-left: 3rem;
+//margin-top: 1rem;
+}
+
+.hide{
+display: none !important;
+}
+
+.msg{
+font-size: large;color: red;font-weight: 600;
+}
+
+
+
+
+
+::ng-deep .egret-navy .mat-flat-button.mat-accent, .egret-navy .mat-raised-button.mat-accent, .egret-navy .mat-fab.mat-accent, .egret-navy .mat-mini-fab.mat-accent {
+// background-color: #801580 !important;
+ background: linear-gradient(45deg, #89288e 0%, #d38740 100%) !important;
+}
+::ng-deep .egret-navy .mat-flat-button.mat-accent, .egret-navy .mat-raised-button.mat-accent, .egret-navy .mat-fab.mat-accent, .egret-navy .mat-mini-fab.mat-accent {
+   color: #fff !important
+}
+
+
+.bg{
+ background: linear-gradient(45deg, #89288e 0%, #d38740 100%) !important;
+}
+
+.actionbtn
+{
+ width: 120px !important;
+}
+
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+  color: green;
+  font-size: medium;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}

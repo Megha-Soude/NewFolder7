@@ -1,0 +1,179 @@
+<mat-card class="p-0" [@animate]="{value:'*',params:{y:'50px',delay:'300ms'}}">
+  <mat-card-title class="">
+    <div class="card-title-text">ACR Reports
+      <div style="
+      margin-left: 53%;" fxFlex="100" fxFlex.gt-sm="17">
+    <button  *ngIf="isdisablereport"  (click)="ReportExport()" 
+    style="background-color: purple; margin-top: inherit; color: white;" mat-raised-button  color="primary">
+      Export to Excel &nbsp; <mat-icon>
+        cloud_download</mat-icon> </button>
+        
+
+        <button disabled *ngIf="!isdisablereport"
+         style="background-color: purple; margin-top: inherit; color: white;" mat-raised-button  color="warn">
+          {{this.pendingcount}}/{{page.totalElements}} &nbsp; <mat-icon>
+            sync</mat-icon> </button>
+          </div>
+            &nbsp;
+            <div fxFlex="100" fxFlex.gt-sm="15">
+            <button style="background-color: purple; margin-top: inherit; color: white;" mat-raised-button  color="primary">Total Rows :
+              {{page.totalElements}}</button>
+              </div>
+            </div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+
+  <mat-card-content class="p-0">
+
+    <div style="margin: 5px;" fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}">
+      <div style="align-self: center;" fxFlex="100" fxFlex.gt-sm="67">
+      
+    <a style="font-weight: normal !important;" [innerHtml]="FilterString"></a>
+      </div>
+    <!-- <div fxFlex="100" fxFlex.gt-sm="17">
+      <button *ngIf="isdisablereport"  (click)="ReportExport()" style="float: left;" mat-stroked-button color="primary">
+        Export to Excel &nbsp; <mat-icon>
+          cloud_download</mat-icon> </button>
+
+
+          <button disabled *ngIf="!isdisablereport"  style="float: left; color: red;" mat-stroked-button color="warn">
+            {{this.pendingcount}}/{{page.totalElements}} &nbsp; <mat-icon>
+              sync</mat-icon> </button>
+
+          
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="15">
+      <button style="float: right;" mat-stroked-button color="primary">Total Rows :
+        {{page.totalElements}}</button>
+    </div> -->
+</div>
+
+    <ngx-datatable #mydatatable1 class="material ml-0 mr-0 my-data-table" [rows]="items" [columnMode]="'force'" [headerHeight]="50"
+      [footerHeight]="50" [scrollbarH]="true" (page)="setPage($event)" [limit]="page.size" [count]="page.totalElements"
+      [rowHeight]="35" [externalPaging]="true">
+
+
+
+    
+
+      <ngx-datatable-column [frozenLeft]="true" [width]="200" name="Auction Title" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.Auction_Title}}
+        </ng-template>
+      </ngx-datatable-column>
+     
+      <ngx-datatable-column [frozenLeft]="true" [width]="200" name="BIDS" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.BIDS }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [frozenLeft]="true" [width]="200" name="BID STATUS" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.BID_STATUS }}
+        </ng-template>
+      </ngx-datatable-column>
+      
+      <ngx-datatable-column [frozenLeft]="true" [width]="200" name="Registration Number" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.Registration_Number }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [width]="200" name="Chassis No" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.Chassis_No}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [width]="200" name="Contract Number" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.Contract_Number}}
+        </ng-template>
+      </ngx-datatable-column>
+
+
+      <ngx-datatable-column [width]="200" name="Email Id" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.Email_Id}}
+        </ng-template>
+      </ngx-datatable-column>
+
+
+
+      <ngx-datatable-column name="Inventory Title" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.Inventory_Title}}
+        </ng-template>
+      </ngx-datatable-column>
+    
+
+      <ngx-datatable-column [width]="200" name="Mobile Number" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.Mobile_Number }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [width]="200" name="RUNNER UP 1 BID AMOUNT" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.RUNNER_UP_1_BID_AMOUNT }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [width]="200" name="RUNNER UP 1 MOBILE_NO" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.RUNNER_UP_1_MOBILE_NO }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [width]="200" name="RUNNER UP 1 NAME" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.RUNNER_UP_1_NAME }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [width]="200" name="RUNNER UP 2 BID AMOUNT" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.RUNNER_UP_2_BID_AMOUNT }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [width]="200" name="RUNNER UP 2 MOBILE NO" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.RUNNER_UP_2_MOBILE_NO }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [width]="200" name="RUNNER UP 2 BID AMOUNT" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.RUNNER_UP_2_BID_AMOUNT }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [width]="200" name="RUNNER UP 2 NAME" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.RUNNER_UP_2_NAME }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [width]="200" name="Total Bid Count" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.Total_Bid_Count }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [width]="200" name="Winning Bid Amount" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.WINNING_BID_AMOUNT }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [width]="200" name="Winner Name" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.Winner_Name }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [width]="200" name="Year of manufacture" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.Year_of_manufacture }}
+        </ng-template>
+      </ngx-datatable-column>
+      
+    </ngx-datatable>
+
+
+    
+  </mat-card-content>
+</mat-card>
+<app-acr-report-filter (messageEvent)="receiveMessage($event)"></app-acr-report-filter>

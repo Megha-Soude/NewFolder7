@@ -1,0 +1,327 @@
+
+  <mat-card-title class="">
+    <div class="card-title-text">User Registration
+      
+      <button style="float: right ; vertical-align: inherit;" mat-icon-button mat-dialog-close class="closeDel">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <br>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
+    <p style="font-size: x-small;  color: red;">Fields marked with * are mandatory</p>
+    <form [formGroup]="updateBuyerUserForm">
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+          <!-- <div class="pb-1">
+            <mat-form-field class="full-width">
+              <mat-label>Party Type</mat-label>
+              <mat-select required [disableOptionCentering]="true"
+                [formControl]="updateBuyerUserForm.controls['party_type_id']"
+                (selectionChange)="onSelectParty($event.value)">
+                <mat-option *ngFor="let type of PartyTypeArray" [value]="type.id"> {{type.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div> -->
+          <!-- <div *ngIf="!ChannelPartnerRegistration" class="pb-1">
+            <mat-form-field class="full-width">
+              <input required matInput placeholder="User Name" [formControl]="updateBuyerUserForm.controls['username']">
+            </mat-form-field>
+          </div> -->
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <input required matInput pattern="[7896][0-9]{9}" maxlength="10" minlength="10"
+                (keypress)="numberOnly($event)" type="text" placeholder="Mobile Number"
+                [formControl]="updateBuyerUserForm.controls['mobile_number']">
+            </mat-form-field>
+  
+          </div>
+  
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Bidder Code" minlength="10" maxlength="10"
+                (keypress)="alphanumbericOnly($event)" [formControl]="updateBuyerUserForm.controls['bidder_code']">
+            </mat-form-field>
+            <!-- <div class="error-message" *ngIf="hasRequiredError('bidder_code')"> &nbsp;
+              <b>*required</b>
+            </div> -->
+            <div class="error-message" *ngIf="hasPatternError('bidder_code')"><b> &nbsp;
+                *Invalid Format</b></div>
+            <div class="error-message" *ngIf="hasMinLengthError('bidder_code')"><b> &nbsp;
+                *Bdder code should be 10 digits</b></div>
+          </div>
+  
+  
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <input required matInput placeholder="Email" [formControl]="updateBuyerUserForm.controls['email_id']">
+            </mat-form-field>
+            <div class="error-message" *ngIf="hasRequiredError('email_id')"> &nbsp;
+              <b>*required</b>
+            </div>
+            <div class="error-message" *ngIf="hasPatternError('email_id')"><b> &nbsp;
+                *Invalid Format</b></div>
+          </div>
+  
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <mat-label>District</mat-label>
+              <mat-select required [disableOptionCentering]="true" (selectionChange)="OnSelectDistrict($event.value)"
+                [formControl]="updateBuyerUserForm.controls['district']">
+                <mat-option *ngFor="let objDistrict of DistictArray" [value]="objDistrict"> {{objDistrict}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="error-message" *ngIf="hasRequiredError('district')"> &nbsp;
+              <b>*required</b>
+            </div>
+          </div>
+  
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <mat-label>Pincode</mat-label>
+              <mat-select required [disableOptionCentering]="true"
+                [formControl]="updateBuyerUserForm.controls['pincode']">
+                <mat-option *ngFor="let objPin of PincodeArray" [value]="objPin">{{objPin}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="error-message" *ngIf="hasRequiredError('pincode')"> &nbsp;
+              <b>*required</b>
+            </div>
+          </div>
+  
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Address 2" [formControl]="updateBuyerUserForm.controls['address_2']">
+            </mat-form-field>
+          </div>
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <input required matInput placeholder="Pan No." maxlength="12"
+                [formControl]="updateBuyerUserForm.controls['pan_no']">
+            </mat-form-field>
+            <div class="error-message" *ngIf="hasRequiredError('pan_no')"> &nbsp;
+              <b>*required</b>
+            </div>
+          </div>
+          <div class="pb-1">
+            <!-- <label>Document Image</label> -->
+            <div class="mb-1" style="margin-top:5px">
+              <!-- <label>
+                <input type="file"  (change)="IncomeFileUpload($event)" style="display:none" />
+                <a mat-raised-button color="primary" class="files">
+                  <mat-icon>file_upload</mat-icon>
+                </a>
+              </label> -->
+  
+              &nbsp;&nbsp;
+  
+              <img id="blahh" *ngIf="DocumentFile && !isdocFilePDF  && isdocFileImage"
+                (click)="ShowImagePopUp(DocumentFile)" src="{{ DocumentFile }}" width="100px" height="100px" />
+  
+              <!--             
+  
+       &nbsp;&nbsp;
+                <a *ngIf="isdocFilePDF"  href="{{DocumentFile}}" target="_blank"
+                style=" text-decoration-line: underline; color: blue;" routerLinkActive="active">Download </a> -->
+  
+  
+              <a *ngIf="isdocFilePDF" href="{{DocumentFile}}" target="_blank"
+                style=" text-decoration-line: underline; color: blue;" routerLinkActive="active"> View Document </a>
+  
+  
+  
+            </div>
+          </div>
+  
+  
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <mat-label>Address Proof Type</mat-label>
+              <mat-select (selectionChange)="onSelectType($event.value)" class="textfield"
+                [formControl]="updateBuyerUserForm.controls['Type']">
+  
+                <mat-option value="Driving">Permanent Driving License</mat-option>
+  
+                <mat-option value="Utility">Utility bill in own name (Electricity, Phone, Gas)</mat-option>
+                <mat-option value="Passport">Passport</mat-option>
+              </mat-select>
+            </mat-form-field>
+  
+          </div>
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Document No." [formControl]="updateBuyerUserForm.controls['aadhar_no']">
+            </mat-form-field>
+            <div class="error-message" *ngIf="hasRequiredError('aadhar_no')"> &nbsp;
+              <b>*required</b>
+            </div>
+          </div>
+          <div class="pb-1" *ngIf="AddressDocumentFile">
+            <!-- <label>Document Image</label> -->
+            <div class="mb-1">
+              <!-- <label>
+                <input type="file"  (change)="AddressFileUpload($event)" style="display:none" />
+                <a mat-raised-button color="primary" class="files">
+                  <mat-icon>file_upload</mat-icon>
+                </a>
+              </label> -->
+  
+              &nbsp;&nbsp;
+              <!-- <label style="color: rgb(169, 169, 169);"> {{ AddressAttachementFile }} </label> -->
+              <img *ngIf="AddressDocumentFile && !isaddressDocPdf  && isaddressDocImage" id="blahh"
+                (click)="ShowImagePopUp(AddressDocumentFile)" src="{{ AddressDocumentFile }}" width="100px"
+                height="100px" />
+  
+              <a *ngIf="isaddressDocPdf" href="{{AddressDocumentFile}}" target="_blank"
+                style=" text-decoration-line: underline; color: blue;" routerLinkActive="active"> View Document </a>
+  
+            </div>
+          </div>
+  
+        </div>
+        <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+  
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <input required matInput placeholder="Full Name" [formControl]="updateBuyerUserForm.controls['full_name']">
+            </mat-form-field>
+            <div class="error-message" *ngIf="hasRequiredError('full_name')"> &nbsp;
+              <b>*required</b>
+            </div>
+            <div class="error-message" *ngIf="hasPatternError('full_name')"><b> &nbsp;
+                *Invalid Format</b></div>
+          </div>
+  
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <input required matInput placeholder="Username" [formControl]="updateBuyerUserForm.controls['username']">
+            </mat-form-field>
+            <div class="error-message" *ngIf="hasRequiredError('username')"> &nbsp;
+              <b>*required</b>
+            </div>
+            <div class="error-message" *ngIf="hasPatternError('username')"><b> &nbsp;
+                *Invalid Format</b></div>
+          </div>
+  
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <mat-label>State</mat-label>
+              <mat-select required [disableOptionCentering]="true" (selectionChange)="OnSelectState($event.value)"
+                [formControl]="updateBuyerUserForm.controls['state']">
+                <mat-option *ngFor="let objState of StateArray" [value]="objState?.state_name"> {{objState?.state_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="error-message" *ngIf="hasRequiredError('state')"> &nbsp;
+              <b>*required</b>
+            </div>
+          </div>
+  
+  
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <mat-label>City</mat-label>
+              <mat-select required [disableOptionCentering]="true" (selectionChange)="OnSelectPincode($event.value)"
+                [formControl]="updateBuyerUserForm.controls['city']">
+                <mat-option *ngFor="let objCity of CityArray" [value]="objCity"> {{objCity}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="error-message" *ngIf="hasRequiredError('city')"> &nbsp;
+              <b>*required</b>
+            </div>
+          </div>
+          <div class="pb-1">
+            <mat-form-field class="full-width">
+              <input required matInput placeholder="Address 1" [formControl]="updateBuyerUserForm.controls['address_1']">
+            </mat-form-field>
+            <div class="error-message" *ngIf="hasRequiredError('address_1')"> &nbsp;
+              <b>*required</b>
+            </div>
+            <div class="error-message" *ngIf="hasPatternError('address_1')"><b> &nbsp;
+                *Invalid Format</b></div>
+          </div>
+  
+          <div class="pb-1">
+            <div class="mb-1"></div>
+          </div>
+          <div class="pb-1" style="margin-top: 20px;">
+            <mat-label>Upload Image</mat-label>
+  
+  
+  
+            <div class="mb-1" style="margin-top: 10px;">
+              <label>
+                <input type="file" (change)="IncomeFileUpload($event)" style="display:none" />
+                <a mat-raised-button color="primary" class="files">
+                  <mat-icon>file_upload</mat-icon>
+                </a>
+              </label>
+  
+  
+              <label style="color: rgb(169, 169, 169);"> {{ AttachementFile }} </label>
+  
+  
+  
+  
+            </div>
+  
+          </div>
+          <div class="pb-1"></div>
+          <div class="pb-1"></div>
+          <div class="pb-1"></div>
+          <div class="pb-1"></div>
+          <div class="pb-1"></div>
+          <div class="pb-1"></div>
+          <div class="pb-1"></div>
+          <div class="pb-1"></div>
+          <div class="pb-1"></div>
+          <div class="pb-1" style="margin-top: 60px;" *ngIf="AddressDocumentFile">
+            <mat-label>Upload Image</mat-label>
+            <div class="mb-1" style="margin-top: 10px;">
+              <label>
+                <input type="file" (change)="AddressFileUpload($event)" style="display:none" />
+                <a mat-raised-button color="primary" class="files">
+                  <mat-icon>file_upload</mat-icon>
+                </a>
+              </label>
+              <label style="color: rgb(169, 169, 169);"> {{ AddressAttachementFile }} </label>
+  
+  
+            </div>
+          </div>
+          <div class="pb-1" style="margin-top: -20px;" *ngIf="AddressDocumentFile == '' && DocumentFile == ''">
+            <mat-label>Upload Image</mat-label>
+            <div class="mb-1" style="margin-top: 10px;">
+              <label>
+                <input type="file" (change)="AddressFileUpload($event)" style="display:none" />
+                <a mat-raised-button color="primary" class="files">
+                  <mat-icon>file_upload</mat-icon>
+                </a>
+              </label>
+              <label style="color: rgb(169, 169, 169);"> {{ AddressAttachementFile }} </label>
+            </div>
+          </div>
+          <div class="pb-1" style="margin-top: 65px;" *ngIf="AddressDocumentFile == ''">
+            <mat-label>Upload Image</mat-label>
+            <div class="mb-1" style="margin-top: 10px;">
+              <label>
+                <input type="file" (change)="AddressFileUpload($event)" style="display:none" />
+                <a mat-raised-button color="primary" class="files">
+                  <mat-icon>file_upload</mat-icon>
+                </a>
+              </label>
+              <label style="color: rgb(169, 169, 169);"> {{ AddressAttachementFile }} </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button mat-raised-button *ngIf="!isASubmit" class="yellow-btn" (click)="Save()">Save</button>
+      &nbsp;&nbsp;<button mat-raised-button class="yellow-btn" *ngIf="isASubmit" (click)="Update()">Update</button>
+      &nbsp;&nbsp;<button mat-dialog-close class="closeDel blue-btn" type="reset" mat-raised-button
+        (click)="onClear()">Cancel</button>
+    </form>
+  </mat-card-content>

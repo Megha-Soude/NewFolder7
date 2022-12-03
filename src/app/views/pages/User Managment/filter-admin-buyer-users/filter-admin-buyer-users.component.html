@@ -1,0 +1,138 @@
+<div class="handle" *ngIf="!isCustomizerOpen">
+  <button mat-fab color="primary" (click)="isCustomizerOpen = true">
+    <mat-icon title=" Advanced Search" class="spin text-white">search</mat-icon>
+  </button>
+</div>
+
+<form [formGroup]="itemForm">
+<div id="app-customizer" *ngIf="isCustomizerOpen">
+  <mat-card style="margin-top: 71px;" class="p-0">
+    <mat-card-title class="m-0 light-gray">
+      <div style="color: white; background-color: rgb(128 21 128) !important;" class="card-title-text"
+        fxLayout="row wrap" fxLayoutAlign="center center">
+       
+        Advanced Search
+        <span fxFlex="15px"></span>
+        
+        <span fxFlex></span>
+        <button class="card-control" mat-icon-button (click)="isCustomizerOpen = false">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </mat-card-title>
+
+
+    <mat-card-content [perfectScrollbar] *ngIf="viewMode === 'options'">
+      <p><small></small></p>
+
+      <div class="pb-1 mb-1 border-bottom">
+        <h6 class="title text-muted">Search By Details</h6>
+        <mat-form-field class="filterwidthrow">
+          <input  maxlength="100" [formControl]="itemForm.controls['mobile_number']" matInput type="text" placeholder="Mobile Number">
+        </mat-form-field>
+
+
+        <mat-form-field class="filterwidthrow">
+          <input  maxlength="100" [formControl]="itemForm.controls['username']" matInput type="text" placeholder="User Name">
+        </mat-form-field>
+
+       
+
+        <mat-form-field class="filterwidthrow">
+          <input  maxlength="100" [formControl]="itemForm.controls['full_name']" matInput type="text" placeholder="Full Name">
+        </mat-form-field>
+       
+
+
+
+        <mat-form-field class="filterwidthrow">
+          <mat-label>isActive</mat-label>
+          <mat-select [formControl]="itemForm.controls['is_active']"  disableRipple>
+            <mat-option value="ACTIVE">Active</mat-option>
+            <mat-option value="INACTIVE">Inactive</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="filterwidth" *ngIf="userTypeInfo">
+          <mat-label>Category</mat-label>
+          <mat-select [formControl]="itemForm.controls['category']"  disableRipple>
+            <mat-option value="Normal">Normal</mat-option>
+            <mat-option value="TML Dealer TASS">TML Dealer TASS</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="filterwidthrow" 
+        (click)="picker?.open()" >
+          <input readonly matInput [formControl]="itemForm.controls['from_date']" matInput [matDatepicker]="picker" placeholder="From Date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="filterwidthrow" 
+        (click)="picker1?.open()">
+          <input readonly matInput  [formControl]="itemForm.controls['to_date']"  matInput [matDatepicker]="picker1" placeholder="To Date">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+        
+        <mat-form-field class="filterwidth"  *ngIf="userTypeInfo" >
+          <mat-label>State</mat-label>
+          <mat-select (selectionChange)="OnchangeState($event.value)" [formControl]="itemForm.controls['state']"  disableRipple>
+            <mat-option *ngFor="let Sate of States" value={{Sate.state_name}}>{{Sate.state_name}}</mat-option>
+            
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field class="filterwidth" *ngIf="userTypeInfo" >
+          <mat-label>District</mat-label>
+          <mat-select (selectionChange)="OnchangeState($event.value)" [formControl]="itemForm.controls['state']"  disableRipple>
+            <mat-option *ngFor="let District of District" value={{District}}>{{District}}</mat-option>
+            
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field class="filterwidth" *ngIf="!userTypeInfo">
+          <mat-label>User Type</mat-label>
+          <mat-select [formControl]="itemForm.controls['user_type']"  disableRipple>
+            <mat-option value="admin">admin</mat-option>
+            <!-- <mat-option value="evaluator">Evaluator</mat-option> -->
+            <mat-option value="channel partner">Channel Partner</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+
+
+      
+
+
+
+        <!-- <mat-form-field class="filterwidthrow">
+          <input  maxlength="100" [formControl]="itemForm.controls['state']" matInput type="text" placeholder="State">
+        </mat-form-field> -->
+
+
+        
+        <!-- <mat-form-field class="filterwidthrow">
+          <input   maxlength="100" [formControl]="itemForm.controls['district']" matInput type="text" placeholder="District">
+        </mat-form-field> -->
+
+        <!-- <mat-form-field class="filterwidthrow">
+          <input   maxlength="100" [formControl]="itemForm.controls['city']" matInput type="text" placeholder="City"> 
+        </mat-form-field> -->
+
+        
+      
+
+      </div>
+      <div class="pb-1 mb-1 border-bottom">
+        <button mat-raised-button (click)="Search()"  color="primary">Search</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button mat-raised-button (click)="reset()"  color="warn">Reset</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+</form>

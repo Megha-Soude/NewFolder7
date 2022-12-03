@@ -1,0 +1,29 @@
+<div class="sidebar-panel" style="background-color: purple !important; margin-top: 0px !important;">
+    <div id="scroll-area" [perfectScrollbar]  style=" margin-top: 0px !important;" class="navigation-hold" >
+        <div class="sidebar-hold">
+
+            <!-- App Logo -->
+            
+            <!-- Sidebar user -->
+            <div class="app-user">
+                <div class="app-user-photo">
+                    <img src="./assets/images/logo-white.png" [ngStyle]="{'height':'65%'}" class="mat-elevation-z1"
+                        alt="">
+                </div>
+                <span class="app-user-name mb-05">
+                    <!-- <mat-icon class="icon-xs text-muted">lock</mat-icon>  -->
+                    <span style="color:white;Font-size:15px ;" > TMFL e-MARKETPLACE</span>
+                    <br>
+                    {{RoleType}}
+
+                </span>
+
+
+            </div>
+            <!-- Navigation -->
+            <app-sidenav [items]="menuItems" [hasIconMenu]="hasIconTypeMenuItem" [iconMenuTitle]="iconTypeMenuTitle">
+
+            </app-sidenav>
+        </div>
+    </div>
+</div>

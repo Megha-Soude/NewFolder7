@@ -1,0 +1,164 @@
+<mat-card class="p-0" [@animate]="{value:'*',params:{y:'50px',delay:'300ms'}}">
+  <mat-card-title class="">
+    <div class="card-title-text">Registration Fee List
+      <!-- <div style="
+      margin-left: 53%;" fxFlex="100" fxFlex.gt-sm="17"> -->
+
+      <div fxLayout="row" fxLayout.lt-sm="column" class="shop-top-toolbar">
+
+ 
+     <!-- <button  mat-raised-button
+    style="background-color: purple; margin-top: inherit; color: white;">Add Subscription</button>
+      &nbsp;
+       
+    <button  *ngIf="isdisablereport"  (click)="ReportExport()" 
+    style="background-color: purple; margin-top: inherit; color: white;" mat-raised-button  color="primary">
+      Export to Excel &nbsp; <mat-icon>
+        cloud_download</mat-icon> </button> 
+        
+
+        <button disabled *ngIf="!isdisablereport"
+         style="background-color: purple; margin-top: inherit; color: white;" mat-raised-button  color="warn">
+          {{this.pendingcount}}/{{page.totalElements}} &nbsp; <mat-icon>
+            sync</mat-icon> </button> -->
+            <span fxFlex></span>
+            <button  mat-raised-button (click)="CheckPermission()" 
+            style="background-color: purple; margin-top: inherit; color: white;"><a class="AddSubscription" routerLink="/pages/AddRegisterationFee" >Add Subscription</a></button>
+          &nbsp;
+          <button *ngIf="isdisablereport" (click)="ReportExport()"
+            style="background-color: purple; margin-top: inherit; color: white;" mat-raised-button
+            color="primary">
+            Export to Excel &nbsp; <mat-icon>
+              cloud_download</mat-icon> </button>
+          <button disabled *ngIf="!isdisablereport"
+            style="background-color: purple; margin-top: inherit; color: white;" mat-raised-button color="warn">
+             &nbsp; <mat-icon>
+              sync</mat-icon> </button>
+          &nbsp;
+          <button style="background-color: purple; margin-top: inherit; color: white;" mat-raised-button
+            color="primary">Total Rows :
+            </button>
+
+
+              </div>
+              </div>
+
+  
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content class="p-0">
+
+    <!-- <mat-form-field class="margin-333" style="width: 25%">
+      <input 
+      matInput 
+      placeholder="Search" 
+      value=""
+      (keyup)='updateFilter($event)'>
+    </mat-form-field> -->
+
+    <a style="font-weight: normal !important;" [innerHtml]="FilterString"></a>
+
+
+    <ngx-datatable #mydatatable9 class="material ml-0 mr-0 my-data-table" [rows]="items" [columnMode]="'force'" [headerHeight]="50"
+      [footerHeight]="50" [scrollbarH]="true" (page)="setPage($event)" [limit]="page.size" [count]="page.totalElements"
+      [rowHeight]="35" [externalPaging]="true">
+
+
+
+      <ngx-datatable-column [frozenLeft]="true" [width]="210" name="Action" [flexGrow]="1" [frozenLeft]="true">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <button *ngIf="row.status == 'PENDING'" (click)="Approve(row)"
+            style=" color: white; background-color: red !important; height: 18px;" class="btn-xs smlbtn"
+            mat-raised-button> Approve</button>
+          <button *ngIf="row.status == 'PENDING'" (click)="Cancel(row,'REFUND' )"
+            style="margin-left: 2px; color: white; background-color: purple !important;  height: 18px;"
+            class="btn-xs smlbtn" mat-raised-button> Cancel</button>
+          <button *ngIf="row.status == 'PENDING'" (click)="Cancel(row,'CANCELLED')"
+            style=" margin-left: 2px; color: white; background-color: #d38740 !important;  height: 18px;"
+            class="btn-xs smlbtn" mat-raised-button> Refund</button>
+          <a *ngIf="row.status !== 'PENDING'">NA</a>
+        </ng-template>
+      </ngx-datatable-column>
+
+
+      <ngx-datatable-column [frozenLeft]="true" [width]="200" name="Status" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.status}}
+        </ng-template>
+      </ngx-datatable-column>
+
+
+      <ngx-datatable-column [frozenLeft]="true" [width]="200" name="Mobile Number" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.bidder_mobile_number }}
+        </ng-template>
+      </ngx-datatable-column>
+      
+      <ngx-datatable-column [width]="200" name="Bidder Code" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.buyer.bidder_code}}
+        </ng-template>
+      </ngx-datatable-column>
+      
+      
+      <ngx-datatable-column [width]="200" name="Full Name" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.buyer?.full_name}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [width]="200" name="Payment Type" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.payment_type}}
+        </ng-template>
+      </ngx-datatable-column>
+
+
+      <ngx-datatable-column [width]="200" name="Transaction Id" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.transaction_id}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      
+      <ngx-datatable-column name="Amount" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.total_amount}}
+        </ng-template>
+      </ngx-datatable-column>
+
+
+
+      <!-- <ngx-datatable-column name="Update EMD Balance" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.updated_emd_balance}}
+        </ng-template>
+      </ngx-datatable-column> -->
+
+      
+      <ngx-datatable-column [width]="200" name="Subscription Start" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.start_at| date :'dd-MM-yyyy' }}
+        </ng-template>
+      </ngx-datatable-column>
+
+
+      <ngx-datatable-column [width]="200" name="Subscription End" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.expired_at| date :'dd-MM-yyyy' }}
+        </ng-template>
+      </ngx-datatable-column>
+
+
+      <ngx-datatable-column [width]="200" name="Trasaction Date" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.txn_time| date :'dd-MM-yyyy hh:mm:ss a' }}
+        </ng-template>
+      </ngx-datatable-column>
+
+    </ngx-datatable>
+
+
+
+  </mat-card-content>
+</mat-card>
+<app-feelist-filter (messageEvent)="receiveMessage($event)"></app-feelist-filter>
